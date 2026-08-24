@@ -46,7 +46,20 @@ main{padding:30px;min-width:0}
 .kpi{padding:18px;position:relative;overflow:hidden}.kpi:after{content:"";position:absolute;width:90px;height:90px;border-radius:50%;border:16px solid rgba(255,255,255,.025);right:-28px;bottom:-30px}.kpi label{display:block;color:var(--muted);font-size:11px;letter-spacing:.1em;font-weight:800}.kpi b{display:block;font-size:32px;margin:7px 0 3px}.kpi span{color:var(--muted);font-size:12px}
 .grid{display:grid;grid-template-columns:1.55fr .95fr;gap:16px}.panel{padding:18px}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.panel-head h3{margin:0;font-size:18px}.pill{padding:6px 10px;border-radius:999px;background:rgba(226,35,42,.16);border:1px solid rgba(226,35,42,.34);color:#ffbec1;font-size:10px;font-weight:900;letter-spacing:.08em}
 table{width:100%;border-collapse:collapse}th,td{padding:12px 9px;border-bottom:1px solid var(--line);text-align:left}th{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.08em}td{font-size:14px}.pos{font-weight:900}.pts{color:var(--gold);font-weight:900}.driver-cell{display:flex;align-items:center;gap:10px}.race-number{min-width:38px;height:30px;padding:0 8px;border-radius:8px;display:inline-grid;place-items:center;background:#0b0f16;border:1px solid var(--line);font-weight:950;font-style:italic;color:#fff;box-shadow:inset 3px 0 0 var(--team-color,#d71920)}.driver-cell small{display:block;color:var(--muted);margin-top:2px}.team-dot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:7px;box-shadow:0 0 0 1px rgba(255,255,255,.12)}.ferrari{background:#e10600}.mercedes{background:#343a40}.toyota{background:#ffffff;box-shadow:0 0 0 1px #9aa4b2}.nissan{background:#ffd400}.porsche{background:#1368ce}.team-card{position:relative;overflow:hidden}.team-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--team-color,#444)}.team-card.ferrari-card{--team-color:#e10600}.team-card.mercedes-card{--team-color:#343a40}.team-card.toyota-card{--team-color:#ffffff}.team-card.nissan-card{--team-color:#ffd400}.team-card.porsche-card{--team-color:#1368ce}
-.races{display:grid;gap:10px}.race{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px;border-radius:13px;border:1px solid var(--line);background:linear-gradient(180deg,#171c26,#11151d)}.race small{display:block;color:var(--muted);margin-top:4px}.race-tag{font-size:10px;font-weight:900;color:var(--muted)}.race-tag.next{color:var(--gold)}
+.races{display:grid;gap:12px}
+.race{padding:16px;border-radius:15px;border:1px solid var(--line);background:linear-gradient(180deg,#171c26,#11151d);transition:border-color .2s ease,transform .2s ease}
+.race:hover{border-color:#3c4658;transform:translateY(-1px)}
+.race-main{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:start}
+.race strong{display:block;font-size:17px;line-height:1.25}
+.race small{display:block;color:var(--muted);margin-top:6px}
+.race-date{display:block;color:var(--muted);font-size:12px;margin-top:5px}
+.race-state{align-self:start;justify-self:end;font-family:Inter,Segoe UI,Arial,sans-serif;font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;padding:7px 10px;border:1px solid #3b4352;border-radius:999px;color:#aeb6c5;background:#0b0e14;white-space:nowrap}
+.race-state.next{color:#fff;border-color:var(--red);background:linear-gradient(135deg,#e2232a,#8f1116);box-shadow:0 6px 16px rgba(226,35,42,.18)}
+.race-action{display:inline-flex;align-items:center;gap:8px;width:max-content;margin-top:13px;padding:9px 12px;border-radius:9px;border:1px solid rgba(226,35,42,.45);background:rgba(226,35,42,.09);color:#fff;text-decoration:none;font-size:12px;font-weight:800;letter-spacing:.025em;transition:.2s ease}
+.race-action:hover{background:rgba(226,35,42,.2);border-color:var(--red);transform:translateX(2px)}
+.race-action span{color:#ff686e;font-size:16px;line-height:1}
+@media(max-width:520px){.race-main{grid-template-columns:1fr}.race-state{grid-row:1;justify-self:start;margin-bottom:2px}.race-action{width:100%;justify-content:center;margin-top:14px}}
+
 .view{display:none}.view.active{display:block;animation:fade .25s ease}@keyframes fade{from{opacity:.3;transform:translateY(6px)}to{opacity:1;transform:none}}
 .team-grid,.driver-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.team-card,.driver-card{padding:18px;position:relative;overflow:hidden}.team-card h3,.driver-card-head{display:flex;gap:12px;align-items:flex-start}.driver-card-head h3{margin:0 0 8px}.team-card p,.driver-card p{margin:5px 0;color:var(--muted)}.driver-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}.driver-identity{display:flex;align-items:center;gap:10px;min-width:0}.driver-identity h3{margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.flag{font-size:25px;line-height:1;filter:drop-shadow(0 2px 2px rgba(0,0,0,.35))}.driver-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:14px}.driver-stats>div{background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:10px;padding:10px}.driver-stats span{display:block;color:var(--muted);font-size:11px;text-transform:uppercase}.driver-stats strong{font-size:18px}.stat-line{display:flex;justify-content:space-between;padding-top:11px;margin-top:11px;border-top:1px solid var(--line)}
 .team-card:after{content:"";position:absolute;right:-28px;top:-28px;width:95px;height:95px;border-radius:50%;background:rgba(255,255,255,.025)}
@@ -115,42 +128,20 @@ table{width:100%;border-collapse:collapse}th,td{padding:12px 9px;border-bottom:1
     <section id="statistiche" class="view"><div class="kpis"><div class="card kpi"><label>PIÙ VITTORIE</label><b>—</b><span>Dati disponibili dopo Gara 1</span></div><div class="card kpi"><label>PIÙ POLE</label><b>—</b><span>Dati disponibili dopo Gara 1</span></div><div class="card kpi"><label>PIÙ GIRI VELOCI</label><b>—</b><span>Dati disponibili dopo Gara 1</span></div><div class="card kpi"><label>MIGLIOR SCUDERIA</label><b>—</b><span>Dati disponibili dopo Gara 1</span></div></div></section>
 
     
-<div class="race-modal" id="raceModal" role="dialog" aria-modal="true" aria-labelledby="raceSheetTitle">
-  <div class="race-sheet">
-    <div class="race-sheet-head">
-      <div>
-        <div class="eyebrow" id="raceSheetEyebrow">SCHEDA GARA</div>
-        <h3 id="raceSheetTitle">Gara</h3>
-        <p id="raceSheetMeta"></p>
-      </div>
-      <button class="close-race" type="button" onclick="closeRace()" aria-label="Chiudi">×</button>
-    </div>
-    <div class="race-tabs">
-      <button class="race-tab active" id="tabQualifica" type="button" onclick="showRaceTab('qualifica')">Qualifica</button>
-      <button class="race-tab" id="tabGara" type="button" onclick="showRaceTab('gara')">Gara</button>
-    </div>
-    <div class="race-result-wrap" id="raceResultContent"></div>
-  </div>
-</div>
-
 <div class="footer">ART Reparto Corse · Campionato interno 2026 · Prototipo grafico collegabile al foglio dati</div>
   </main>
 </div>
 <script>
-const drivers=["GIUSEPPE","NANO","MAX008","LELE","PABLITO75","AVALLONE92","GAEGAE17","CLDC","ENERGYMAURI","SKIZZO","CALIBRA63","JOSEPH","SOVRANO","IVISICH","GIO","ZYX","YANNIS","FAX#86","IVAN","FRA"];
+const drivers=["NANO","MAX008","LELE","PABLITO75","AVALLONE92","GAEGAE17","CLDC","ENERGYMAURI","SKIZZO","CALIBRA63","JOSEPH","SOVRANO","IVISICH","GIO","ZYX","YANNIS","FAX#86","IVAN","FRA"];
 const teams=["Ferrari","Nissan","Toyota","Porsche","Mercedes"];
-const raceNumbers=[1,2,3,4,5,9,12,25,27,35,63,66,68,72,76,77,78,86,88,95];
-const psnIds=["artur_giuseppe","AdamantionX94","alf_12_61","Lele_0489","SPARTAN-den","il_Pazzo_ita","GaeGae17","CLDC86","","","Calibraenzo","joseph666401","Sovrano_gt","IVISICH","RoSiK-n-Sil3Nc3","zyx_977","YANNIS_SD","Fax-86","IvanFiammaNera","Francesco-Lepera"];
-const driverFlags=["🇮🇹","🇮🇹","🇮🇹","🇨🇭","🇮🇹","🇮🇹","🇬🇧","🇬🇧","🇮🇹","🇮🇹","🇮🇹","🇮🇹","🇮🇹","🇮🇹","🇮🇹","🇮🇹","🇪🇸","🇮🇹","🇮🇹","🇮🇹"];
-const nationalities=[
-  {country:"Italia",flag:"🇮🇹"},{country:"Italia",flag:"🇮🇹"},{country:"Italia",flag:"🇮🇹"},{country:"Svizzera",flag:"🇨🇭"},{country:"Italia",flag:"🇮🇹"},
-  {country:"Italia",flag:"🇮🇹"},{country:"Regno Unito",flag:"🇬🇧"},{country:"Regno Unito",flag:"🇬🇧"},{country:"Italia",flag:"🇮🇹"},{country:"Italia",flag:"🇮🇹"},
-  {country:"Italia",flag:"🇮🇹"},{country:"Italia",flag:"🇮🇹"},{country:"Italia",flag:"🇮🇹"},{country:"Italia",flag:"🇮🇹"},{country:"Italia",flag:"🇮🇹"},
-  {country:"Italia",flag:"🇮🇹"},{country:"Spagna",flag:"🇪🇸"},{country:"Italia",flag:"🇮🇹"},{country:"Italia",flag:"🇮🇹"},{country:"Italia",flag:"🇮🇹"}
-];
-const teamClass={Ferrari:"ferrari",Nissan:"nissan",Toyota:"toyota",Porsche:"porsche",Mercedes:"mercedes"};
-const teamColor={Ferrari:"#e10600",Mercedes:"#343a40",Toyota:"#ffffff",Nissan:"#ffd400",Porsche:"#1368ce"};
-const ranking=drivers.map((name,i)=>({name,number:raceNumbers[i],psn:psnIds[i],rank:i+1,team:teams[i%5],points:0,races:0,country:nationalities[i].country,flag:driverFlags[i]}));
+const raceNumbers=[2,3,4,5,9,12,25,27,35,63,66,68,72,76,77,78,86,88,95];
+const psnIds=["AdamantionX94","alf_12_61","Lele_0489","SPARTAN-den","il_Pazzo_ita","GaeGae17","CLDC86","Energymauri_76","lele2302_","Calibraenzo","joseph666401","Sovrano_gt","IVISICH","RoSiK-n-Sil3Nc3","zyx_977","YANNIS_SD","Fax-86","IvanFiammaNera","Francesco-Lepera"];
+const driverFlags=["🇮🇹","🇮🇹","🇨🇭","🇮🇹","🇮🇹","🇬🇧","🇬🇧","🇮🇹","🇮🇹","🇮🇹","🇮🇹","🇮🇹","🇮🇹","🇮🇹","🇮🇹","🇪🇸","🇮🇹","🇮🇹","🇮🇹"];
+const nationalities=driverFlags.map(f=>({country:f==="🇨🇭"?"Svizzera":f==="🇬🇧"?"Regno Unito":f==="🇪🇸"?"Spagna":"Italia",flag:f}));
+const teamAssignments={IVAN:"Ferrari",IVISICH:"Ferrari",CLDC:"Ferrari",SOVRANO:"Ferrari",ENERGYMAURI:"Ferrari",NANO:"Porsche",AVALLONE92:"Porsche",FRA:"Porsche",GAEGAE17:"Porsche","FAX#86":"Porsche",CALIBRA63:"Porsche",ZYX:"Nissan"};
+const teamClass={Ferrari:"ferrari",Nissan:"nissan",Toyota:"toyota",Porsche:"porsche",Mercedes:"mercedes","Da assegnare":"unassigned"};
+const teamColor={Ferrari:"#e10600",Mercedes:"#343a40",Toyota:"#ffffff",Nissan:"#ffd400",Porsche:"#1368ce","Da assegnare":"#687386"};
+const ranking=drivers.map((name,i)=>({name,number:raceNumbers[i],psn:psnIds[i],rank:i+1,team:teamAssignments[name]||"Da assegnare",points:0,races:0,absences:0,country:nationalities[i].country,flag:driverFlags[i]}));
 const circuits=["Monza","Spa-Francorchamps","Nürburgring GP","Red Bull Ring","Suzuka"];
 const races=[
 {n:1,c:"Monza",cat:"GR3",date:"2026-09-11T21:45:00+02:00"},
@@ -174,68 +165,17 @@ function formatRaceDate(iso){
  return new Intl.DateTimeFormat("it-IT",{weekday:"short",day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit",timeZone:"Europe/Rome"}).format(d);
 }
 function raceHtml(r){
- const now=new Date(), d=new Date(r.date);
- const status=d>now?"DA DISPUTARE":"DISPUTATA";
- return `<div class="race" onclick="openRace(${r.n})" role="button" tabindex="0" onkeydown="if(event.key==='Enter')openRace(${r.n})"><div><strong>Gara ${r.n} · ${r.c}</strong><small>Categoria ${r.cat}</small><span class="race-date">${formatRaceDate(r.date)}</span><div class="race-open">QUALIFICA + GARA →</div></div><span class="race-status">${status}</span></div>`;
+ const now=new Date(), d=new Date(r.date), future=races.filter(x=>new Date(x.date)>now), next=future.length&&future[0].n===r.n;
+ const status=d<=now?"CONCLUSA":next?"PROSSIMA":"PROGRAMMATA";
+ const cls=next?" next":"";
+ return `<div class="race"><div class="race-main"><div><strong>Gara ${r.n} · ${r.c}</strong><small>Categoria ${r.cat}</small><span class="race-date">${formatRaceDate(r.date)}</span><a class="race-action" href="race.html?gara=${r.n}">Apri scheda gara <span>→</span></a></div><span class="race-state${cls}">${status}</span></div></div>`;
 }
 const upcoming=races.filter(r=>new Date(r.date)>new Date());
 document.getElementById("racePreview").innerHTML=(upcoming.length?upcoming:races.slice(-5)).slice(0,5).map(raceHtml).join("");
 document.getElementById("calendarList").innerHTML=races.map(raceHtml).join("");
-document.getElementById("teamGrid").innerHTML=teams.map(t=>`<div class="card team-card ${teamClass[t]}-card"><h3><span class="team-dot ${teamClass[t]}"></span>${t}</h3><p>Piloti assegnati: da definire</p><div class="stat-line"><span>Punti</span><strong class="pts">0</strong></div></div>`).join("");
-document.getElementById("driverGrid").innerHTML=ranking.map(d=>{const avg=d.races?d.points/d.races:0;return `<div class="card driver-card" style="--team-color:${teamColor[d.team]}"><div class="driver-head"><div class="driver-identity"><span class="race-number">#${d.number}</span><h3>${d.name}</h3></div><span class="flag" title="${d.country}" aria-label="${d.country}">${d.flag}</span></div><p>PSN ID: ${d.psn || "da inserire"}</p><p>Scuderia: ${d.team}</p><div class="stat-line"><span>Ranking ART</span><strong>${d.rank}</strong></div><div class="stat-line"><span>Punti</span><strong class="pts">${d.points}</strong></div><div class="stat-line"><span>Gare disputate</span><strong>${d.races}</strong></div><div class="stat-line"><span>Media punti</span><strong>${avg.toLocaleString("it-IT",{minimumFractionDigits:1,maximumFractionDigits:2})}</strong></div></div>`}).join("");
+document.getElementById("teamGrid").innerHTML=teams.map(t=>{const n=ranking.filter(d=>d.team===t).length;return `<div class="card team-card ${teamClass[t]}-card"><h3><span class="team-dot ${teamClass[t]}"></span>${t}</h3><p>Piloti assegnati: ${n}</p><div class="stat-line"><span>Punti</span><strong class="pts">0</strong></div></div>`}).join("");
+document.getElementById("driverGrid").innerHTML=ranking.map(d=>{const avg=d.races?d.points/d.races:0;return `<div class="card driver-card" style="--team-color:${teamColor[d.team]}"><div class="driver-head"><div class="driver-identity"><span class="race-number">#${d.number}</span><h3>${d.name}</h3></div><span class="flag" title="${d.country}" aria-label="${d.country}">${d.flag}</span></div><p>PSN ID: ${d.psn || "da inserire"}</p><p>Scuderia: ${d.team}</p><div class="stat-line"><span>Ranking ART</span><strong>${d.rank}</strong></div><div class="stat-line"><span>Punti</span><strong class="pts">${d.points}</strong></div><div class="stat-line"><span>Gare disputate</span><strong>${d.races}</strong></div><div class="stat-line"><span>Media punti</span><strong>${avg.toLocaleString("it-IT",{minimumFractionDigits:1,maximumFractionDigits:2})}</strong></div><div class="stat-line"><span>Assenze</span><strong>${d.absences}</strong></div><div class="driver-history">Storico gare: verrà aggiornato dopo ogni evento.</div></div>`}).join("");
 
-// I risultati verranno popolati dai due screenshot che riceveremo per ogni evento.
-const qualifyingResults = {};
-const raceResults = {};
-let selectedRaceNumber = null;
-let selectedRaceTab = "qualifica";
-
-function resultTableHtml(rows,type){
- if(!rows || !rows.length){
-   return `<div class="empty-result">Risultati ${type==="qualifica"?"di qualifica":"di gara"} non ancora disponibili.</div>`;
- }
- const isQ=type==="qualifica";
- return `<table class="result-table"><thead><tr>
-   <th>Pos.</th><th>#</th><th>Pilota</th><th>PSN ID</th>
-   <th>${isQ?"Tempo":"Tempo / Distacco"}</th><th>${isQ?"Pole":"Punti"}</th>
- </tr></thead><tbody>${rows.map((x,i)=>`<tr>
-   <td class="pos">${x.pos ?? i+1}</td><td><span class="race-number">#${x.number ?? ""}</span></td>
-   <td><strong>${x.driver ?? ""}</strong></td><td>${x.psn ?? ""}</td>
-   <td>${x.time ?? x.gap ?? "—"}</td>
-   <td class="${isQ?"":"pts"}">${isQ?(x.pole?"●":""):(x.points ?? "—")}</td>
- </tr>`).join("")}</tbody></table>`;
-}
-
-function renderRaceSheet(){
- const r=races.find(x=>x.n===selectedRaceNumber);
- if(!r)return;
- document.getElementById("raceSheetTitle").textContent=`Gara ${r.n} · ${r.c}`;
- document.getElementById("raceSheetMeta").textContent=`${r.cat} · ${formatRaceDate(r.date)}`;
- const isQ=selectedRaceTab==="qualifica";
- document.getElementById("tabQualifica").classList.toggle("active",isQ);
- document.getElementById("tabGara").classList.toggle("active",!isQ);
- const rows=isQ?qualifyingResults[r.n]:raceResults[r.n];
- document.getElementById("raceResultContent").innerHTML=
-   `<div class="race-result-title"><h4>${isQ?"Risultati Qualifica":"Risultati Gara"}</h4><span class="pill">${isQ?"GRIGLIA DI PARTENZA":"ORDINE D'ARRIVO"}</span></div>`+
-   resultTableHtml(rows,selectedRaceTab);
-}
-function openRace(n){
- selectedRaceNumber=n;
- selectedRaceTab="qualifica";
- document.getElementById("raceModal").classList.add("open");
- document.body.style.overflow="hidden";
- renderRaceSheet();
-}
-function closeRace(){
- document.getElementById("raceModal").classList.remove("open");
- document.body.style.overflow="";
-}
-function showRaceTab(tab){
- selectedRaceTab=tab;
- renderRaceSheet();
-}
-document.getElementById("raceModal").addEventListener("click",e=>{if(e.target.id==="raceModal")closeRace();});
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeRace();});
 
 const titles={dashboard:"Dashboard Campionato",generale:"Classifica generale",gr3:"Classifica GR3",gr4:"Classifica GR4",scuderie:"Classifica scuderie",piloti:"Piloti",calendario:"Calendario gare",statistiche:"Statistiche"};
 document.querySelectorAll(".nav button").forEach(btn=>btn.addEventListener("click",()=>{document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));btn.classList.add("active");document.getElementById(btn.dataset.view).classList.add("active");document.getElementById("pageTitle").textContent=titles[btn.dataset.view];window.scrollTo({top:0,behavior:"smooth"})}));
