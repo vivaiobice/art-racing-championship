@@ -14,7 +14,7 @@
 <section class="detail-card"><h2>Statistiche stagione</h2><div class="info-list" id="statsInfo"></div></section>
 <section class="detail-card"><h2>Classifiche</h2><div class="info-list" id="rankingInfo"></div></section>
 </div>
-<section class="detail-card driver-results"><h2>Risultati e migliori prestazioni</h2><div class="empty-history">Nessun risultato ufficiale ancora registrato per la stagione 2026.</div></section>
+<section class="detail-card driver-results"><h2>Risultati e migliori prestazioni</h2><div id="historyBox"></div></section>
 <div class="footer">ART Racing Championship · Scheda pilota</div>
 </div>
 <script src="data.js?v=5"></script><script>
@@ -27,16 +27,25 @@ Mercedes:{gr3:"Mercedes-AMG GT3 '16",gr4:"Mercedes-AMG GT Gr.4"},
 Porsche:{gr3:"Porsche 911 RSR (991) '17",gr4:"Porsche Cayman GT4 Clubsport '16"}
 };
 const n=Number(new URLSearchParams(location.search).get("numero"));const d=DRIVERS.find(x=>x.number===n)||DRIVERS[0];
-const sorted=[...DRIVERS].sort((a,b)=>b.points-a.points||b.wins-a.wins||b.seconds-a.seconds||b.thirds-a.thirds||a.number-b.number);
-const catSorted=sorted.filter(x=>x.category===d.category);
-const generalPos=sorted.findIndex(x=>x.number===d.number)+1;const catPos=catSorted.findIndex(x=>x.number===d.number)+1;
+const generalPos=d.overallPos||"—";const catPos=d.categoryPos||"—";
 document.title=`ART Racing · #${d.number} ${d.name}`;document.getElementById("numBox").textContent=`#${d.number}`;document.getElementById("numBox").style.setProperty("--team",TEAM_COLORS[d.team]||"#596474");document.getElementById("driverName").textContent=`${d.flag} ${d.name}`;document.getElementById("driverPsn").textContent=`PSN ID: ${d.psn}`;document.getElementById("driverTeam").textContent=`Scuderia: ${d.team||"Da assegnare"}`;document.getElementById("driverCategory").innerHTML=`Categoria: <strong>${d.category}</strong>`;
 const avg=d.races?(d.points/d.races).toFixed(1):"0,0";
 document.getElementById("summary").innerHTML=`<div class="summary-card"><span>Punti</span><strong class="pts">${d.points}</strong></div><div class="summary-card"><span>Gare</span><strong>${d.races}</strong></div><div class="summary-card"><span>Media punti</span><strong>${avg}</strong></div><div class="summary-card"><span>Ranking ART</span><strong>${d.ranking??"—"}</strong></div>`;
 document.getElementById("driverInfo").innerHTML=[["Numero gara","#"+d.number],["Gamertag",d.name],["PSN ID",d.psn],["Nazionalità",d.flag+" "+d.country],["Categoria",d.category],["Scuderia",d.team||"Da assegnare"]].map(x=>`<div class="info-row"><span>${x[0]}</span><strong>${x[1]}</strong></div>`).join("");
 const cars=d.team&&CARS[d.team]?CARS[d.team]:null;document.getElementById("carInfo").innerHTML=[["Gr.3",cars?cars.gr3:"Da assegnare"],["Gr.4",cars?cars.gr4:"Da assegnare"]].map(x=>`<div class="info-row"><span>${x[0]}</span><strong>${x[1]}</strong></div>`).join("");
-document.getElementById("statsInfo").innerHTML=[["Vittorie",d.wins||0],["Podi",(d.wins||0)+(d.seconds||0)+(d.thirds||0)],["Pole position",d.poles||0],["Giri veloci",d.fastest||0],["Miglior risultato",d.bestResult||"—"],["Media punti",avg]].map(x=>`<div class="info-row"><span>${x[0]}</span><strong>${x[1]}</strong></div>`).join("");
-document.getElementById("rankingInfo").innerHTML=[["Classifica generale",generalPos+"°"],["Classifica "+d.category,catPos+"°"],["Classifica Gr.3",d.gr3Pos?d.gr3Pos+"°":"—"],["Classifica Gr.4",d.gr4Pos?d.gr4Pos+"°":"—"]].map(x=>`<div class="info-row"><span>${x[0]}</span><strong>${x[1]}</strong></div>`).join("");
+document.getElementById("statsInfo").innerHTML=[["Vittorie",d.wins||0],["Podi",(d.wins||0)+(d.seconds||0)+(d.thirds||0)],["Pole position",d.poles||0],["Giri veloci",d.fastest||0],["Miglior risultato",d.bestResult||"—"],["Ultima gara",d.lastResult||"—"],["Miglior qualifica",d.qualBest||"—"],["Media punti",avg]].map(x=>`<div class="info-row"><span>${x[0]}</span><strong>${x[1]}</strong></div>`).join("");
+document.getElementById("rankingInfo").innerHTML=[["Classifica generale",generalPos==="—"?"—":generalPos+"°"],["Classifica "+d.category,catPos==="—"?"—":catPos+"°"],["Classifica Gr.3",d.gr3Pos?d.gr3Pos+"°":"—"],["Classifica Gr.4",d.gr4Pos?d.gr4Pos+"°":"—"]].map(x=>`<div class="info-row"><span>${x[0]}</span><strong>${x[1]}</strong></div>`).join("");
+
+const demoHistory={
+2:{qual:"2° · 1:34.775",race:"DNF",bestLap:"1:34.845",points:0},
+86:{qual:"5° · 1:35.699",race:"2° · +10.199",bestLap:"1:35.128",points:18},
+68:{qual:"3° · 1:35.547",race:"3° · +11.915",bestLap:"1:35.308",points:15},
+63:{qual:"4° · 1:35.562",race:"4° · +14.140",bestLap:"1:35.100",points:12},
+66:{qual:"6° · 1:36.614",race:"5° · +1:13.710",bestLap:"1:36.547",points:10}
+};
+const h=demoHistory[d.number];
+document.getElementById("historyBox").innerHTML=h?`<div class="info-list"><div class="info-row"><span>Gara 1 · Monza</span><strong>Gr.3</strong></div><div class="info-row"><span>Qualifica</span><strong>${h.qual}</strong></div><div class="info-row"><span>Risultato gara</span><strong>${h.race}</strong></div><div class="info-row"><span>Miglior giro</span><strong>${h.bestLap}</strong></div><div class="info-row"><span>Punti</span><strong class="pts">${h.points}</strong></div></div>`:`<div class="empty-history">Nessun risultato registrato in questa demo.</div>`;
+
 </script><script>if("serviceWorker" in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});</script><nav class="mobile-nav">
 <a href="index.html#dashboard" aria-label="Home">
 <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/><path d="M9.5 20v-5.5h5V20"/></svg>Home</a>

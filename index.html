@@ -43,23 +43,30 @@ function teamLabel(t){return t||"Da assegnare";}
 function teamDot(t){return `<span class="team-dot team-${t||"none"}"></span>${teamLabel(t)}`;}
 function badge(d){return `<span class="category-badge ${d.category.toLowerCase()}">${d.category==="MASTER"?"M":"J"}</span>`;}
 function sortedDrivers(list){return [...list].sort((a,b)=>b.points-a.points||b.wins-a.wins||b.seconds-a.seconds||b.thirds-a.thirds||a.number-b.number);}
-function rankingTable(list){let arr=sortedDrivers(list);return `<table><thead><tr><th>Pos.</th><th>Pilota</th><th>Categoria</th><th>Scuderia</th><th>Gare</th><th>Punti</th></tr></thead><tbody>${arr.map((d,i)=>`<tr><td><b>${i+1}</b></td><td><span class="race-number" style="--team:${TEAM_COLORS[d.team]||"#596474"}">#${d.number}</span><b>${d.name}</b><div style="color:var(--muted);font-size:11px;margin-left:45px">${d.psn}</div></td><td>${badge(d)}</td><td>${teamDot(d.team)}</td><td>${d.races}</td><td class="pts">${d.points}</td></tr>`).join("")}</tbody></table>`;}
+function rankingTable(list,pointsKey="points",racesKey="races"){
+ let arr=[...list].sort((a,b)=>(b[pointsKey]||0)-(a[pointsKey]||0)||b.wins-a.wins||b.seconds-a.seconds||b.thirds-a.thirds||a.number-b.number);
+ return `<table><thead><tr><th>Pos.</th><th>Pilota</th><th>Categoria</th><th>Scuderia</th><th>Gare</th><th>Punti</th></tr></thead><tbody>${arr.map((d,i)=>`<tr><td><b>${i+1}</b></td><td><span class="race-number" style="--team:${TEAM_COLORS[d.team]||"#596474"}">#${d.number}</span><b>${d.name}</b><div style="color:var(--muted);font-size:11px;margin-left:45px">${d.psn}</div></td><td>${badge(d)}</td><td>${teamDot(d.team)}</td><td>${d[racesKey]||0}</td><td class="pts">${d[pointsKey]||0}</td></tr>`).join("")}</tbody></table>`;
+}
 function raceCard(r){let n=nextRace();let isNext=n&&n.n===r.n;let status=new Date(r.date)<=new Date()?"CONCLUSA":isNext?"PROSSIMA":"PROGRAMMATA";return `<article class="race-card ${isNext?"next":""}"><div class="race-top"><div><div style="font-size:10px;color:var(--red);font-weight:900;letter-spacing:.08em">GARA ${r.n}</div><h3>${r.c}</h3></div><span class="race-tag">${r.cat.replace("GR","GR.")}</span></div><div class="race-meta">${fmtDate(r.date)} · ${status}</div><div class="race-specs"><div class="spec"><span>Giri</span><b>${r.laps??"Da confermare"}</b></div><div class="spec"><span>Qualifica</span><b>${r.qual} min</b></div><div class="spec"><span>Carburante</span><b>x${r.fuel}</b></div><div class="spec"><span>Gomme</span><b>x${r.tyres}</b></div></div>${r.weather!=="Non indicato"?`<span class="weather">💧 ${r.weather}</span>`:""}<br><a class="race-link" href="race.html?gara=${r.n}">Apri scheda gara →</a></article>`;}
-document.getElementById("dashRanking").innerHTML=rankingTable(DRIVERS.slice(0,8));
+document.getElementById("dashRanking").innerHTML=rankingTable([...DRIVERS].sort((a,b)=>b.points-a.points||a.number-b.number).slice(0,8));
 document.getElementById("generalRanking").innerHTML=rankingTable(DRIVERS);
-document.getElementById("gr3Ranking").innerHTML=rankingTable(DRIVERS);
-document.getElementById("gr4Ranking").innerHTML=rankingTable(DRIVERS);
+document.getElementById("gr3Ranking").innerHTML=rankingTable(DRIVERS,"gr3Points","gr3Races");
+document.getElementById("gr4Ranking").innerHTML=rankingTable(DRIVERS,"gr4Points","gr4Races");
 document.getElementById("dashRaces").innerHTML=RACES.filter(r=>new Date(r.date)>new Date()).slice(0,2).map(raceCard).join("");
 document.getElementById("calendarGrid").innerHTML=RACES.map(raceCard).join("");
-document.getElementById("driverGrid").innerHTML=DRIVERS.map(d=>`<article class="card driver-card" style="--team:${TEAM_COLORS[d.team]||"#596474"}" onclick="location.href='driver.html?numero=${d.number}'"><div class="driver-head"><span class="race-number" style="--team:${TEAM_COLORS[d.team]||"#596474"}">#${d.number}</span><div><h3>${d.flag} ${d.name} ${badge(d)}</h3><p>PSN ID: ${d.psn}</p><p>${teamDot(d.team)}</p></div></div><div class="driver-stats"><div class="driver-stat"><span>Ranking ART</span><strong>${d.ranking??"—"}</strong></div><div class="driver-stat"><span>Punti</span><strong class="pts">${d.points}</strong></div><div class="driver-stat"><span>Gare disputate</span><strong>${d.races}</strong></div><div class="driver-stat"><span>Media punti</span><strong>${d.races?(d.points/d.races).toFixed(1):"0,0"}</strong></div></div><a class="open-driver" href="driver.html?numero=${d.number}" onclick="event.stopPropagation()">Apri scheda pilota →</a></article>`).join("");
-const teams=["Ferrari","Porsche","Nissan","Toyota","Mercedes"];document.getElementById("teamGrid").innerHTML=teams.map(t=>{let ds=DRIVERS.filter(d=>d.team===t);return `<article class="card driver-card" style="--team:${TEAM_COLORS[t]}"><h3>${teamDot(t)}</h3><p style="color:var(--muted)">${ds.length?ds.map(d=>`#${d.number} ${d.name}`).join(" · "):"Nessun pilota assegnato"}</p><div class="driver-stats"><div class="driver-stat"><span>Piloti</span><strong>${ds.length}</strong></div><div class="driver-stat"><span>Punti</span><strong class="pts">0</strong></div></div></article>`;}).join("");
+document.getElementById("driverGrid").innerHTML=DRIVERS.map(d=>`<article class="card driver-card" style="--team:${TEAM_COLORS[d.team]||"#596474"}" onclick="location.href='driver.html?numero=${d.number}'"><div class="driver-head"><span class="race-number" style="--team:${TEAM_COLORS[d.team]||"#596474"}">#${d.number}</span><div><h3>${d.flag} ${d.name} ${badge(d)}</h3><p>PSN ID: ${d.psn}</p><p>${teamDot(d.team)}</p></div></div><div class="driver-stats"><div class="driver-stat"><span>Classifica</span><strong>${d.overallPos||"—"}°</strong></div><div class="driver-stat"><span>Punti</span><strong class="pts">${d.points}</strong></div><div class="driver-stat"><span>Gare disputate</span><strong>${d.races}</strong></div><div class="driver-stat"><span>Miglior risultato</span><strong>${d.bestResult||"—"}</strong></div></div><a class="open-driver" href="driver.html?numero=${d.number}" onclick="event.stopPropagation()">Apri scheda pilota →</a></article>`).join("");
+const teams=["Ferrari","Porsche","Nissan","Toyota","Mercedes"];
+document.getElementById("teamGrid").innerHTML=teams.map(t=>{
+ let ds=DRIVERS.filter(d=>d.team===t),teamPts=ds.reduce((s,d)=>s+(d.points||0),0);
+ return `<article class="card driver-card" style="--team:${TEAM_COLORS[t]}"><h3>${teamDot(t)}</h3><p style="color:var(--muted)">${ds.length?ds.map(d=>`#${d.number} ${d.name}`).join(" · "):"Nessun pilota assegnato"}</p><div class="driver-stats"><div class="driver-stat"><span>Piloti</span><strong>${ds.length}</strong></div><div class="driver-stat"><span>Punti</span><strong class="pts">${teamPts}</strong></div></div></article>`;
+}).join("");
 function showPage(id,btn){document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));document.getElementById(id).classList.add("active");document.querySelectorAll("[data-page]").forEach(b=>b.classList.remove("active"));document.querySelectorAll(`[data-page="${id}"]`).forEach(b=>b.classList.add("active"));document.getElementById("pageTitle").textContent={dashboard:"Dashboard",classifica:"Classifica generale",gr3:"Classifica Gr.3",gr4:"Classifica Gr.4",scuderie:"Scuderie",piloti:"Piloti",calendario:"Calendario"}[id]||"ART Racing";window.scrollTo({top:0,behavior:"smooth"});}
 document.querySelectorAll("[data-page]").forEach(b=>b.onclick=()=>showPage(b.dataset.page,b));
 const initialPage=(location.hash||"").replace("#","");if(["dashboard","classifica","gr3","gr4","scuderie","piloti","calendario"].includes(initialPage)){showPage(initialPage);}
 let rankingScope="GENERAL",rankingCategory="ALL";
 function renderMobileRanking(){
   let list=rankingCategory==="ALL"?DRIVERS:DRIVERS.filter(d=>d.category===rankingCategory);
-  document.getElementById("generalRanking").innerHTML=rankingTable(list);
+  document.getElementById("generalRanking").innerHTML=rankingScope==="GR3"?rankingTable(list,"gr3Points","gr3Races"):rankingScope==="GR4"?rankingTable(list,"gr4Points","gr4Races"):rankingTable(list);
   document.getElementById("mobileRankingTitle").textContent=rankingScope==="GENERAL"?"Classifica generale":rankingScope==="GR3"?"Classifica Gr.3":"Classifica Gr.4";
 }
 document.querySelectorAll(".tab[data-filter]").forEach(b=>b.onclick=()=>{
@@ -75,13 +82,13 @@ document.querySelectorAll(".tab[data-gr3-filter]").forEach(b=>b.onclick=()=>{
   document.querySelectorAll(".tab[data-gr3-filter]").forEach(x=>x.classList.remove("active"));
   b.classList.add("active");
   const f=b.dataset.gr3Filter;
-  document.getElementById("gr3Ranking").innerHTML=rankingTable(f==="ALL"?DRIVERS:DRIVERS.filter(d=>d.category===f));
+  document.getElementById("gr3Ranking").innerHTML=rankingTable(f==="ALL"?DRIVERS:DRIVERS.filter(d=>d.category===f),"gr3Points","gr3Races");
 });
 document.querySelectorAll(".tab[data-gr4-filter]").forEach(b=>b.onclick=()=>{
   document.querySelectorAll(".tab[data-gr4-filter]").forEach(x=>x.classList.remove("active"));
   b.classList.add("active");
   const f=b.dataset.gr4Filter;
-  document.getElementById("gr4Ranking").innerHTML=rankingTable(f==="ALL"?DRIVERS:DRIVERS.filter(d=>d.category===f));
+  document.getElementById("gr4Ranking").innerHTML=rankingTable(f==="ALL"?DRIVERS:DRIVERS.filter(d=>d.category===f),"gr4Points","gr4Races");
 });
 
 function tick(){let r=nextRace();if(!r)return;document.getElementById("nextRaceName").textContent=`Gara ${r.n} · ${r.short}`;document.getElementById("nextRaceDate").textContent=fmtDate(r.date);let diff=Math.max(0,new Date(r.date)-new Date());document.getElementById("cdD").textContent=Math.floor(diff/86400000);document.getElementById("cdH").textContent=String(Math.floor(diff%86400000/3600000)).padStart(2,"0");document.getElementById("cdM").textContent=String(Math.floor(diff%3600000/60000)).padStart(2,"0");document.getElementById("cdS").textContent=String(Math.floor(diff%60000/1000)).padStart(2,"0");}tick();setInterval(tick,1000);
