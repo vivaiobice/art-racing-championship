@@ -13,8 +13,8 @@
 </section>
 
 <section class="page" id="classifica"><div class="card"><div class="section-head"><h2>Classifica generale</h2><span class="pill">Punti campionato</span></div><div class="tabs"><button class="tab active" data-filter="ALL">Tutti</button><button class="tab" data-filter="MASTER">Master</button><button class="tab" data-filter="JUNIOR">Junior</button></div><div id="generalRanking"></div></div></section>
-<section class="page" id="gr3"><div class="card"><div class="section-head"><h2>Classifica Gr.3</h2><span class="pill">Gare 1–5</span></div><div id="gr3Ranking"></div></div></section>
-<section class="page" id="gr4"><div class="card"><div class="section-head"><h2>Classifica Gr.4</h2><span class="pill">Gare 6–10</span></div><div id="gr4Ranking"></div></div></section>
+<section class="page" id="gr3"><div class="card"><div class="section-head"><h2>Classifica Gr.3</h2><span class="pill">Gare 1–5</span></div><div class="tabs"><button class="tab active" data-gr3-filter="ALL">Tutti</button><button class="tab" data-gr3-filter="MASTER">Master</button><button class="tab" data-gr3-filter="JUNIOR">Junior</button></div><div id="gr3Ranking"></div></div></section>
+<section class="page" id="gr4"><div class="card"><div class="section-head"><h2>Classifica Gr.4</h2><span class="pill">Gare 6–10</span></div><div class="tabs"><button class="tab active" data-gr4-filter="ALL">Tutti</button><button class="tab" data-gr4-filter="MASTER">Master</button><button class="tab" data-gr4-filter="JUNIOR">Junior</button></div><div id="gr4Ranking"></div></div></section>
 <section class="page" id="scuderie"><div class="section-head"><h2>Scuderie</h2></div><div class="driver-grid" id="teamGrid"></div></section>
 <section class="page" id="piloti"><div class="section-head"><h2>Piloti</h2><span class="pill">19 iscritti</span></div><div class="driver-grid" id="driverGrid"></div></section>
 <section class="page" id="calendario"><div class="section-head"><h2>Calendario 2026</h2><span class="pill">Start 21:45</span></div><div class="races" id="calendarGrid"></div></section>
@@ -53,5 +53,19 @@ function showPage(id,btn){document.querySelectorAll(".page").forEach(p=>p.classL
 document.querySelectorAll("[data-page]").forEach(b=>b.onclick=()=>showPage(b.dataset.page,b));
 const initialPage=(location.hash||"").replace("#","");if(["dashboard","classifica","gr3","gr4","scuderie","piloti","calendario"].includes(initialPage)){showPage(initialPage);}
 document.querySelectorAll(".tab[data-filter]").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab[data-filter]").forEach(x=>x.classList.remove("active"));b.classList.add("active");let f=b.dataset.filter;document.getElementById("generalRanking").innerHTML=rankingTable(f==="ALL"?DRIVERS:DRIVERS.filter(d=>d.category===f));});
+
+document.querySelectorAll(".tab[data-gr3-filter]").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".tab[data-gr3-filter]").forEach(x=>x.classList.remove("active"));
+  b.classList.add("active");
+  const f=b.dataset.gr3Filter;
+  document.getElementById("gr3Ranking").innerHTML=rankingTable(f==="ALL"?DRIVERS:DRIVERS.filter(d=>d.category===f));
+});
+document.querySelectorAll(".tab[data-gr4-filter]").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".tab[data-gr4-filter]").forEach(x=>x.classList.remove("active"));
+  b.classList.add("active");
+  const f=b.dataset.gr4Filter;
+  document.getElementById("gr4Ranking").innerHTML=rankingTable(f==="ALL"?DRIVERS:DRIVERS.filter(d=>d.category===f));
+});
+
 function tick(){let r=nextRace();if(!r)return;document.getElementById("nextRaceName").textContent=`Gara ${r.n} · ${r.short}`;document.getElementById("nextRaceDate").textContent=fmtDate(r.date);let diff=Math.max(0,new Date(r.date)-new Date());document.getElementById("cdD").textContent=Math.floor(diff/86400000);document.getElementById("cdH").textContent=String(Math.floor(diff%86400000/3600000)).padStart(2,"0");document.getElementById("cdM").textContent=String(Math.floor(diff%3600000/60000)).padStart(2,"0");document.getElementById("cdS").textContent=String(Math.floor(diff%60000/1000)).padStart(2,"0");}tick();setInterval(tick,1000);
 </script><script>if("serviceWorker" in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});</script></body></html>
