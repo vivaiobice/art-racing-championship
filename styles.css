@@ -19,3 +19,35 @@ table{width:100%;border-collapse:collapse}th,td{padding:11px 8px;border-bottom:1
 @media(max-width:1050px){.kpis{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.driver-grid{grid-template-columns:repeat(2,1fr)}.race-specs{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:760px){.shell{display:block}.sidebar{display:none}main{padding:18px 14px 82px}.topbar{margin-top:4px}.topbar h1{font-size:25px}.hero{grid-template-columns:1fr}.countbox{min-width:0}.driver-grid{grid-template-columns:1fr}.cars{grid-template-columns:1fr}.mobile-nav{display:flex;position:fixed;z-index:100;bottom:0;left:0;right:0;height:64px;background:rgba(7,9,13,.96);backdrop-filter:blur(12px);border-top:1px solid var(--line);justify-content:space-around;align-items:center;padding:6px}.mobile-nav button,.mobile-nav a{background:none;border:0;color:var(--muted);text-decoration:none;font-size:10px;text-align:center}.mobile-nav b{display:block;font-size:18px;color:#e7eaf0;margin-bottom:2px}.mobile-nav .active{color:white}.mobile-nav .active b{color:var(--red)}}
 @media(max-width:520px){.kpis{grid-template-columns:1fr}.race-specs{grid-template-columns:repeat(2,1fr)}.season{display:none}th:nth-child(5),td:nth-child(5){display:none}}
+
+
+/* v4 mobile + driver detail */
+.mobile-brand{display:none}
+.nav-icon{width:22px;height:22px;display:block;margin:0 auto 3px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.driver-card{cursor:pointer;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+.driver-card:hover{transform:translateY(-2px);border-color:#465166;box-shadow:0 12px 28px rgba(0,0,0,.18)}
+.driver-card .open-driver{display:inline-flex;margin-top:12px;font-size:11px;font-weight:900;color:#fff;text-decoration:none;padding:8px 10px;border:1px solid rgba(227,38,46,.42);border-radius:9px;background:rgba(227,38,46,.08)}
+.driver-card .open-driver:hover{background:rgba(227,38,46,.18)}
+.driver-page{max-width:1120px;margin:auto;padding:24px}
+.driver-profile-hero{border:1px solid var(--line);border-radius:20px;padding:22px;background:linear-gradient(135deg,#151c28,#0b1017);display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
+.driver-idblock{display:flex;gap:14px;align-items:flex-start}.driver-number-xl{min-width:88px;height:78px;border-radius:15px;border:1px solid var(--line);display:grid;place-items:center;font-size:29px;font-weight:950;font-style:italic;background:#080c12;box-shadow:inset 5px 0 0 var(--team,#596474)}
+.driver-name-xl h1{margin:0;font-size:34px}.driver-name-xl p{margin:5px 0;color:var(--muted)}
+.driver-summary{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.summary-card{border:1px solid var(--line);border-radius:12px;padding:12px;background:rgba(255,255,255,.025)}.summary-card span{display:block;color:var(--muted);font-size:9px;text-transform:uppercase}.summary-card strong{font-size:20px}
+.driver-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:15px}.detail-card{border:1px solid var(--line);border-radius:16px;padding:17px;background:var(--panel)}.detail-card h2{font-size:18px;margin:0 0 12px}.info-list{display:grid;gap:9px}.info-row{display:flex;justify-content:space-between;gap:20px;border-bottom:1px solid var(--line);padding-bottom:8px}.info-row span{color:var(--muted)}.info-row strong{text-align:right}
+.driver-results{margin-top:15px}.empty-history{border:1px dashed #3a4556;border-radius:12px;padding:30px;text-align:center;color:var(--muted)}
+@media(max-width:760px){
+  .mobile-brand{display:flex;align-items:center;justify-content:center;padding:8px 0 12px;margin-bottom:6px;border-bottom:1px solid var(--line)}
+  .mobile-brand img{width:min(230px,68vw);height:72px;object-fit:contain}
+  #dashboard .kpis{display:none}
+  .topbar{margin-bottom:14px}
+  .topbar p{font-size:12px}
+  .mobile-nav{gap:2px}
+  .mobile-nav button,.mobile-nav a{width:20%;font-size:9px;line-height:1.1}
+  .mobile-nav b{display:none}
+  .nav-icon{width:21px;height:21px;margin-bottom:3px}
+  .driver-profile-hero{grid-template-columns:1fr}
+  .driver-detail-grid{grid-template-columns:1fr}
+  .driver-page{padding:14px 14px 82px}
+  .driver-number-xl{min-width:72px;height:66px;font-size:24px}
+  .driver-name-xl h1{font-size:27px}
+}
