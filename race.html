@@ -2,10 +2,29 @@
 <meta name="theme-color" content="#d71920"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="ART Racing">
 <link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png"><link rel="stylesheet" href="styles.css?v=5"><style>
 .race-page{max-width:1120px;margin:auto;padding:22px}.back{display:inline-flex;text-decoration:none;color:var(--muted);font-size:12px;margin-bottom:14px}.event-hero{display:grid;grid-template-columns:1fr 1fr;gap:20px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(145deg,#121823,#080b10);padding:22px}.event-hero h1{font-size:34px;margin:8px 0}.event-map{display:grid;place-items:center;min-height:260px}.event-map img.track{width:100%;height:260px;object-fit:contain;background:#000;border-radius:14px}.circuit-logo{max-width:180px;max-height:72px;object-fit:contain;margin-bottom:8px}.event-spec-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:9px;margin:17px 0}.event-spec{border:1px solid var(--line);background:var(--panel);padding:11px;border-radius:11px}.event-spec span{display:block;font-size:9px;color:var(--muted);text-transform:uppercase}.event-spec strong{font-size:14px}.result-tabs{display:flex;gap:8px;margin:18px 0 10px}.result-area{border:1px solid var(--line);border-radius:16px;background:var(--panel);padding:17px;overflow:auto}.empty{border:1px dashed #3a4556;border-radius:12px;padding:38px;text-align:center;color:var(--muted)}@media(max-width:760px){.race-page{padding:14px}.event-hero{grid-template-columns:1fr}.event-spec-grid{grid-template-columns:repeat(2,1fr)}.event-hero h1{font-size:27px}}
+
+.race-nav{display:flex;justify-content:space-between;gap:12px;margin:16px 0 0}
+.race-nav a{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;border:1px solid var(--line);background:#0d131c;color:#fff;padding:11px 13px;border-radius:11px;font-size:12px;font-weight:900;transition:.2s ease}
+.race-nav a:hover{border-color:var(--red);background:rgba(227,38,46,.12)}
+.race-nav a[hidden]{display:none}
+.swipe-hint{display:none;text-align:center;color:var(--muted);font-size:10px;margin-top:8px}
+@media(max-width:760px){
+  .race-nav{gap:8px}
+  .race-nav a{padding:11px 8px;font-size:11px}
+  .swipe-hint{display:block}
+}
+
 </style></head><body><div class="race-page"><a class="back" href="index.html#calendario">← Torna al calendario</a>
 <section class="event-hero"><div><div class="pill red" id="cat">GR.</div><h1 id="raceTitle">Gara</h1><p id="raceDate" style="color:var(--muted)"></p><img id="circuitLogo" class="circuit-logo" alt="" style="display:none"><p id="raceWeather"></p></div><div class="event-map"><img id="track" class="track" alt="Mappa circuito"></div></section>
 <div class="event-spec-grid" id="specGrid"></div>
 <div class="result-tabs"><button class="tab active" data-result="qual">Qualifica</button><button class="tab" data-result="race">Gara</button></div><section class="result-area"><div class="section-head"><h2 id="resultTitle">Risultati Qualifica</h2><span class="pill" id="resultBadge">GRIGLIA</span></div><div id="resultContent"></div></section>
+
+<nav class="race-nav" aria-label="Navigazione tra le gare">
+  <a id="prevRace" href="#">← Gara precedente</a>
+  <a id="nextRace" href="#">Gara successiva →</a>
+</nav>
+<div class="swipe-hint">Su smartphone puoi anche scorrere a sinistra/destra per cambiare gara.</div>
+
 <div class="footer">ART Racing Championship · Scheda ufficiale evento</div></div>
 <script src="data.js?v=5"></script><script>
 const p=new URLSearchParams(location.search),n=Number(p.get("gara")||1),r=RACES.find(x=>x.n===n)||RACES[0];
@@ -15,5 +34,31 @@ document.getElementById("raceWeather").innerHTML=r.weather!=="Non indicato"?`<sp
 const specs=[["Numero giri",r.laps??"Da confermare"],["Qualifica",`${r.qual} min`],["Carburante",`x${r.fuel}`],["Gomme",`x${r.tyres}`],["Mescole","Media + Morbida"],["Start","21:45"]];
 document.getElementById("specGrid").innerHTML=specs.map(s=>`<div class="event-spec"><span>${s[0]}</span><strong>${s[1]}</strong></div>`).join("");
 const QUAL={},RESULTS={};function draw(type){let rows=(type==="qual"?QUAL[n]:RESULTS[n])||[];document.getElementById("resultTitle").textContent=type==="qual"?"Risultati Qualifica":"Risultati Gara";document.getElementById("resultBadge").textContent=type==="qual"?"GRIGLIA":"ORDINE D'ARRIVO";document.getElementById("resultContent").innerHTML=rows.length?"":`<div class="empty">Risultati ${type==="qual"?"di qualifica":"di gara"} non ancora disponibili.</div>`;}
+
+const prevLink=document.getElementById("prevRace"),nextLink=document.getElementById("nextRace");
+if(r.n>1){prevLink.href=`race.html?gara=${r.n-1}`;}else{prevLink.hidden=true;}
+if(r.n<RACES.length){nextLink.href=`race.html?gara=${r.n+1}`;}else{nextLink.hidden=true;}
+
+let touchStartX=null,touchStartY=null;
+document.addEventListener("touchstart",e=>{
+  if(e.touches.length!==1)return;
+  touchStartX=e.touches[0].clientX;
+  touchStartY=e.touches[0].clientY;
+},{passive:true});
+document.addEventListener("touchend",e=>{
+  if(touchStartX===null||!e.changedTouches.length)return;
+  const dx=e.changedTouches[0].clientX-touchStartX;
+  const dy=e.changedTouches[0].clientY-touchStartY;
+  touchStartX=null;touchStartY=null;
+  if(Math.abs(dx)<70||Math.abs(dx)<Math.abs(dy)*1.25)return;
+  if(dx<0&&r.n<RACES.length) location.href=`race.html?gara=${r.n+1}`;
+  if(dx>0&&r.n>1) location.href=`race.html?gara=${r.n-1}`;
+},{passive:true});
+
+document.addEventListener("keydown",e=>{
+  if(e.key==="ArrowLeft"&&r.n>1) location.href=`race.html?gara=${r.n-1}`;
+  if(e.key==="ArrowRight"&&r.n<RACES.length) location.href=`race.html?gara=${r.n+1}`;
+});
+
 document.querySelectorAll("[data-result]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-result]").forEach(x=>x.classList.remove("active"));b.classList.add("active");draw(b.dataset.result);});draw("qual");
 </script><script>if("serviceWorker" in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});</script></body></html>
