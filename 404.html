@@ -12,7 +12,11 @@
 <div class="grid2"><div class="card"><div class="section-head"><h3>Classifica generale</h3><span class="pill red">LIVE</span></div><div id="dashRanking"></div></div><div class="card"><div class="section-head"><h3>Prossime gare</h3></div><div class="races" id="dashRaces"></div></div></div>
 </section>
 
-<section class="page" id="classifica"><div class="card"><div class="section-head"><h2>Classifica generale</h2><span class="pill">Punti campionato</span></div><div class="tabs"><button class="tab active" data-filter="ALL">Tutti</button><button class="tab" data-filter="MASTER">Master</button><button class="tab" data-filter="JUNIOR">Junior</button></div><div id="generalRanking"></div></div></section>
+<section class="page" id="classifica"><div class="card">
+<div class="section-head"><h2 id="mobileRankingTitle">Classifica generale</h2><span class="pill">Punti campionato</span></div>
+<div class="tabs ranking-scope"><button class="tab active" data-ranking-scope="GENERAL">Generale</button><button class="tab" data-ranking-scope="GR3">Gr.3</button><button class="tab" data-ranking-scope="GR4">Gr.4</button></div>
+<div class="tabs"><button class="tab active" data-filter="ALL">Tutti</button><button class="tab" data-filter="MASTER">Master</button><button class="tab" data-filter="JUNIOR">Junior</button></div>
+<div id="generalRanking"></div></div></section>
 <section class="page" id="gr3"><div class="card"><div class="section-head"><h2>Classifica Gr.3</h2><span class="pill">Gare 1–5</span></div><div class="tabs"><button class="tab active" data-gr3-filter="ALL">Tutti</button><button class="tab" data-gr3-filter="MASTER">Master</button><button class="tab" data-gr3-filter="JUNIOR">Junior</button></div><div id="gr3Ranking"></div></div></section>
 <section class="page" id="gr4"><div class="card"><div class="section-head"><h2>Classifica Gr.4</h2><span class="pill">Gare 6–10</span></div><div class="tabs"><button class="tab active" data-gr4-filter="ALL">Tutti</button><button class="tab" data-gr4-filter="MASTER">Master</button><button class="tab" data-gr4-filter="JUNIOR">Junior</button></div><div id="gr4Ranking"></div></div></section>
 <section class="page" id="scuderie"><div class="section-head"><h2>Scuderie</h2></div><div class="driver-grid" id="teamGrid"></div></section>
@@ -52,7 +56,20 @@ const teams=["Ferrari","Porsche","Nissan","Toyota","Mercedes"];document.getEleme
 function showPage(id,btn){document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));document.getElementById(id).classList.add("active");document.querySelectorAll("[data-page]").forEach(b=>b.classList.remove("active"));document.querySelectorAll(`[data-page="${id}"]`).forEach(b=>b.classList.add("active"));document.getElementById("pageTitle").textContent={dashboard:"Dashboard",classifica:"Classifica generale",gr3:"Classifica Gr.3",gr4:"Classifica Gr.4",scuderie:"Scuderie",piloti:"Piloti",calendario:"Calendario"}[id]||"ART Racing";window.scrollTo({top:0,behavior:"smooth"});}
 document.querySelectorAll("[data-page]").forEach(b=>b.onclick=()=>showPage(b.dataset.page,b));
 const initialPage=(location.hash||"").replace("#","");if(["dashboard","classifica","gr3","gr4","scuderie","piloti","calendario"].includes(initialPage)){showPage(initialPage);}
-document.querySelectorAll(".tab[data-filter]").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab[data-filter]").forEach(x=>x.classList.remove("active"));b.classList.add("active");let f=b.dataset.filter;document.getElementById("generalRanking").innerHTML=rankingTable(f==="ALL"?DRIVERS:DRIVERS.filter(d=>d.category===f));});
+let rankingScope="GENERAL",rankingCategory="ALL";
+function renderMobileRanking(){
+  let list=rankingCategory==="ALL"?DRIVERS:DRIVERS.filter(d=>d.category===rankingCategory);
+  document.getElementById("generalRanking").innerHTML=rankingTable(list);
+  document.getElementById("mobileRankingTitle").textContent=rankingScope==="GENERAL"?"Classifica generale":rankingScope==="GR3"?"Classifica Gr.3":"Classifica Gr.4";
+}
+document.querySelectorAll(".tab[data-filter]").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".tab[data-filter]").forEach(x=>x.classList.remove("active"));
+  b.classList.add("active");rankingCategory=b.dataset.filter;renderMobileRanking();
+});
+document.querySelectorAll(".tab[data-ranking-scope]").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".tab[data-ranking-scope]").forEach(x=>x.classList.remove("active"));
+  b.classList.add("active");rankingScope=b.dataset.rankingScope;renderMobileRanking();
+});
 
 document.querySelectorAll(".tab[data-gr3-filter]").forEach(b=>b.onclick=()=>{
   document.querySelectorAll(".tab[data-gr3-filter]").forEach(x=>x.classList.remove("active"));
