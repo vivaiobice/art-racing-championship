@@ -57,8 +57,31 @@ table{width:100%;border-collapse:collapse}th,td{padding:11px 8px;border-bottom:1
 :root{--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px)}
 @media(max-width:760px){
   body{padding-top:var(--safe-top)}
-  main,.driver-page,.race-page{padding-bottom:calc(82px + var(--safe-bottom))!important}
+  main,.driver-page,.race-page,.lobby-page{padding-bottom:calc(82px + var(--safe-bottom))!important}
   .mobile-nav{height:calc(64px + var(--safe-bottom));padding-bottom:calc(6px + var(--safe-bottom));bottom:0}
   .mobile-nav a,.mobile-nav button{display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);text-decoration:none}
   .back,.driver-page>a:first-child,.race-page>a:first-child{margin-top:10px!important;position:relative;z-index:2}
+}
+
+/* v11 circuit flags + lobby settings */
+.circuit-name{display:flex;align-items:flex-start;gap:9px;min-width:0}
+.circuit-flag{display:inline-block;flex:0 0 auto;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;font-size:.92em;line-height:1.2}
+.race-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.race-actions .race-link{margin-top:0}
+.lobby-link{text-transform:uppercase;letter-spacing:.045em;background:var(--red);border-color:var(--red);color:#fff}
+.lobby-link:hover{background:#fa3039;border-color:#fa3039}
+.lobby-page{max-width:1120px;margin:auto;padding:24px}
+.lobby-backlinks{display:flex;justify-content:space-between;gap:12px}
+.lobby-hero{border:1px solid var(--line);border-radius:20px;padding:22px;background:linear-gradient(135deg,rgba(227,38,46,.23),#0b1017 58%);display:grid;grid-template-columns:1fr minmax(300px,.7fr);gap:22px;align-items:center}
+.lobby-hero h1{font-size:34px;margin:7px 0}.lobby-hero p{margin:0;color:var(--muted)}
+.lobby-kicker{margin-top:13px;color:var(--red);font-size:11px;font-weight:950;letter-spacing:.12em}
+.lobby-summary{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.lobby-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;margin-top:15px}
+.lobby-section{border:1px solid var(--line);border-radius:16px;padding:17px;background:linear-gradient(180deg,var(--panel),#0e131c)}
+.lobby-section h2{font-size:18px;margin:0}.lobby-settings{display:grid;gap:0}
+.lobby-setting{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;padding:10px 0;border-bottom:1px solid var(--line)}
+.lobby-setting:last-child{border-bottom:0;padding-bottom:0}.lobby-setting span{color:var(--muted);font-size:12px}.lobby-setting strong{text-align:right;font-size:13px}
+@media(max-width:760px){
+  .circuit-name{gap:7px}.race-top h3{font-size:18px}.race-actions{display:grid;grid-template-columns:1fr}.race-actions .race-link{justify-content:center}
+  .lobby-page{padding:14px}.lobby-backlinks{align-items:center}.lobby-hero{grid-template-columns:1fr;padding:18px}.lobby-hero h1{font-size:27px}.lobby-summary{grid-template-columns:repeat(2,1fr)}.lobby-grid{grid-template-columns:1fr}.lobby-setting{gap:12px}
 }

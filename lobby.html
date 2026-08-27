@@ -1,0 +1,31 @@
+<!doctype html><html lang="it"><head><title>ART Racing · Impostazioni Lobby</title><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#d71920"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="ART Racing">
+<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png"><link rel="stylesheet" href="styles.css?v=6"></head><body>
+<main class="lobby-page">
+<div class="mobile-brand"><img src="assets/art-logo.png" alt="ART Racing Championship"></div>
+<div class="lobby-backlinks"><a id="backRace" class="back" href="race.html">← Torna alla gara</a><a class="back" href="index.html#calendario">Torna al calendario</a></div>
+<section class="lobby-hero"><div><div class="pill red" id="lobbyCategory">GR.</div><div class="lobby-kicker" id="lobbyRound">GARA</div><h1 id="lobbyTitle" class="circuit-name">Impostazioni Lobby</h1><p>Configurazione ufficiale della sessione</p></div><div class="lobby-summary" id="lobbySummary"></div></section>
+<div class="lobby-grid" id="lobbySections"></div>
+<nav class="race-nav" aria-label="Navigazione impostazioni lobby"><a id="prevLobby" href="#">← Lobby precedente</a><a id="nextLobby" href="#">Lobby successiva →</a></nav>
+<div class="footer">ART Racing Championship · Impostazioni ufficiali lobby</div>
+</main>
+<nav class="mobile-nav">
+<a href="index.html#dashboard" aria-label="Home"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/><path d="M9.5 20v-5.5h5V20"/></svg>Home</a>
+<a href="index.html#classifica" aria-label="Classifica"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M8 4h8v4a4 4 0 0 1-8 0Z"/><path d="M8 6H4v1a4 4 0 0 0 4 4"/><path d="M16 6h4v1a4 4 0 0 1-4 4"/><path d="M12 12v5"/><path d="M8 20h8"/><path d="M9 17h6"/></svg>Classifica</a>
+<a href="index.html#piloti" aria-label="Piloti"><svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5.5 20c.6-4.2 3-6.4 6.5-6.4s5.9 2.2 6.5 6.4"/><path d="M7.5 18.5h9"/></svg>Piloti</a>
+<a class="active" href="index.html#calendario" aria-label="Gare"><svg class="nav-icon" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 9h16"/><path d="M8 13h3M13 13h3M8 16h3"/></svg>Gare</a>
+<a href="regolamento.html" aria-label="Regole"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M6 4h12v16H6z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>Regole</a>
+</nav>
+<script src="data.js?v=6"></script><script>
+const params=new URLSearchParams(location.search),requested=Number(params.get("race")||1),race=RACES.find(item=>item.n===requested)||RACES[0];
+document.title=`ART Racing · Lobby Gara ${race.n} ${race.short}`;
+document.getElementById("lobbyCategory").textContent=race.cat.replace("GR","GR.");
+document.getElementById("lobbyRound").textContent=`GARA ${race.n}`;
+document.getElementById("lobbyTitle").innerHTML=`<span class="circuit-flag" aria-hidden="true">${race.flag}</span><span>${race.c}</span>`;
+document.getElementById("backRace").href=`race.html?gara=${race.n}`;
+document.getElementById("lobbySummary").innerHTML=[["Giri",race.laps],["Qualifica",`${race.qual} min`],["Carburante",`×${race.fuel}`],["Gomme",`×${race.tyres}`]].map(([label,value])=>`<div class="summary-card"><span>${label}</span><strong>${value}</strong></div>`).join("");
+document.getElementById("lobbySections").innerHTML=LOBBY_SECTIONS.map(section=>`<section class="lobby-section"><div class="section-head"><h2>${section.title}</h2></div><div class="lobby-settings">${section.items.map(([label,value])=>{const resolved=typeof value==="function"?value(race):value;return `<div class="lobby-setting"><span>${label}</span><strong>${resolved}</strong></div>`;}).join("")}</div></section>`).join("");
+const prev=document.getElementById("prevLobby"),next=document.getElementById("nextLobby");
+if(race.n>1)prev.href=`lobby.html?race=${race.n-1}`;else prev.hidden=true;
+if(race.n<RACES.length)next.href=`lobby.html?race=${race.n+1}`;else next.hidden=true;
+</script><script>if("serviceWorker" in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});</script></body></html>
