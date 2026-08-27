@@ -68,6 +68,8 @@ table{width:100%;border-collapse:collapse}th,td{padding:11px 8px;border-bottom:1
 .circuit-flag{display:inline-block;flex:0 0 auto;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;font-size:.92em;line-height:1.2}
 .race-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .race-actions .race-link{flex:1;justify-content:center;margin-top:0;text-transform:uppercase;letter-spacing:.045em}
+.race-actions .results-link{background:var(--red);border-color:var(--red);color:#fff}
+.race-actions .results-link:hover{background:#fa3039;border-color:#fa3039}
 .race-actions .lobby-link{background:rgba(227,38,46,.08);border-color:rgba(227,38,46,.45);color:inherit}
 .race-actions .lobby-link:hover{background:rgba(227,38,46,.2);border-color:rgba(227,38,46,.45)}
 .lobby-link{text-transform:uppercase;letter-spacing:.045em;background:var(--red);border-color:var(--red);color:#fff}
