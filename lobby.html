@@ -16,8 +16,9 @@
 <a class="active" href="index.html#calendario" aria-label="Gare"><svg class="nav-icon" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 9h16"/><path d="M8 13h3M13 13h3M8 16h3"/></svg>Gare</a>
 <a href="regolamento.html" aria-label="Regole"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M6 4h12v16H6z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>Regole</a>
 </nav>
-<script src="data.js?v=6"></script><script>
-const params=new URLSearchParams(location.search),requested=Number(params.get("race")||1),race=RACES.find(item=>item.n===requested)||RACES[0];
+<script src="data.js?v=7"></script><script src="js/live-data.js?v=7"></script><script>
+const params=new URLSearchParams(location.search),requested=Number(params.get("race")||1);
+function renderLobby(data){const races=data.gare||LOCAL_DATA.gare,race=races.find(item=>item.n===requested)||races[0];
 document.title=`ART Racing · Lobby Gara ${race.n} ${race.short}`;
 document.getElementById("lobbyCategory").textContent=race.cat.replace("GR","GR.");
 document.getElementById("lobbyRound").textContent=`GARA ${race.n}`;
@@ -27,5 +28,7 @@ document.getElementById("lobbySummary").innerHTML=[["Giri",race.laps],["Qualific
 document.getElementById("lobbySections").innerHTML=LOBBY_SECTIONS.map(section=>`<section class="lobby-section"><div class="section-head"><h2>${section.title}</h2></div><div class="lobby-settings">${section.items.map(([label,value])=>{const resolved=typeof value==="function"?value(race):value;return `<div class="lobby-setting"><span>${label}</span><strong>${resolved}</strong></div>`;}).join("")}</div></section>`).join("");
 const prev=document.getElementById("prevLobby"),next=document.getElementById("nextLobby");
 if(race.n>1)prev.href=`lobby.html?race=${race.n-1}`;else prev.hidden=true;
-if(race.n<RACES.length)next.href=`lobby.html?race=${race.n+1}`;else next.hidden=true;
+if(race.n<races.length)next.href=`lobby.html?race=${race.n+1}`;else next.hidden=true;
+}
+renderLobby(LOCAL_DATA);ARTLiveData.getAll().then(renderLobby);
 </script><script>if("serviceWorker" in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});</script></body></html>

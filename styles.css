@@ -18,6 +18,7 @@ table{width:100%;border-collapse:collapse}th,td{padding:11px 8px;border-bottom:1
 .mobile-nav{display:none}
 @media(max-width:1050px){.kpis{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.driver-grid{grid-template-columns:repeat(2,1fr)}.race-specs{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:760px){.shell{display:block}.sidebar{display:none}main{padding:18px 14px 82px}.topbar{margin-top:4px}.topbar h1{font-size:25px}.hero{grid-template-columns:1fr}.countbox{min-width:0}.driver-grid{grid-template-columns:1fr}.cars{grid-template-columns:1fr}.mobile-nav{display:flex;position:fixed;z-index:100;bottom:0;left:0;right:0;height:64px;background:rgba(7,9,13,.96);backdrop-filter:blur(12px);border-top:1px solid var(--line);justify-content:space-around;align-items:center;padding:6px}.mobile-nav button,.mobile-nav a{background:none;border:0;color:var(--muted);text-decoration:none;font-size:10px;text-align:center}.mobile-nav b{display:block;font-size:18px;color:#e7eaf0;margin-bottom:2px}.mobile-nav .active{color:white}.mobile-nav .active b{color:var(--red)}}
+@media(max-width:760px){.grid2>*{min-width:0}.grid2 .card{overflow:hidden}#dashRanking{overflow-x:auto}}
 @media(max-width:520px){.kpis{grid-template-columns:1fr}.race-specs{grid-template-columns:repeat(2,1fr)}.season{display:none}th:nth-child(5),td:nth-child(5){display:none}}
 
 
@@ -51,6 +52,8 @@ table{width:100%;border-collapse:collapse}th,td{padding:11px 8px;border-bottom:1
   .driver-number-xl{min-width:72px;height:66px;font-size:24px}
   .driver-name-xl h1{font-size:27px}
 }
+.race-card.has-hero,.event-hero.has-hero{background-image:linear-gradient(90deg,rgba(7,9,13,.96),rgba(7,9,13,.72)),var(--race-hero);background-size:cover;background-position:center}
+.race-card.has-hero,.event-hero.has-hero{background-image:linear-gradient(90deg,rgba(7,9,13,.96),rgba(7,9,13,.72)),var(--race-hero);background-size:cover;background-position:center}
 
 
 /* v8 iOS safe-area + persistent mobile nav */
