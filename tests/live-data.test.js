@@ -29,16 +29,18 @@ test('mappa roster e gare nella shape del sito',()=>{
   assert.equal(piloti.length,1);
   for(const [key,value] of Object.entries({id:'eiden',number:15,name:'EIDEN',psn:'xiimeet',flag:'🇪🇸',category:'JUNIOR',team:'Nissan',points:0,races:0}))assert.equal(piloti[0][key],value);
   const gare=LiveData.mapGare(LiveData.parseCSV('GARA,DATA,ORA,CIRCUITO,PAESE,CLASSE,GIRI,CARBURANTE_X,GOMME_X,QUALIFICA_MIN,PIOGGIA_POSSIBILE,STATO\n10,2026-11-13,21:45,Suzuka,JP,GR.4,13,2,3,10,FALSE,IN PROGRAMMA'));
-  for(const [key,value] of Object.entries({n:10,c:'Suzuka',key:'suzuka',flag:'🇯🇵',cat:'GR4',laps:13,fuel:2,tyres:3,qual:10,heroImage:null}))assert.equal(gare[0][key],value);
+  for(const [key,value] of Object.entries({n:10,c:'Suzuka',key:'suzuka',flag:'🇯🇵',cat:'GR4',laps:13,fuel:2,tyres:3,qual:10,heroImage:'assets/circuits/suzuka.webp'}))assert.equal(gare[0][key],value);
 });
 
-test('heroImage accetta soltanto asset locali per circuiti',()=>{
-  const rows=[
-    {GARA:'1',DATA:'2026-09-10',ORA:'21:45',CIRCUITO:'Monza',PAESE:'IT',CLASSE:'GR.3',HERO_IMAGE:'assets/circuits/monza.webp'},
-    {GARA:'2',DATA:'2026-09-17',ORA:'21:45',CIRCUITO:'Spa',PAESE:'BE',CLASSE:'GR.3',HERO_IMAGE:'https://example.com/spa.jpg'}
-  ];
-  assert.equal(LiveData.mapGare(rows)[0].heroImage,'assets/circuits/monza.webp');
-  assert.equal(LiveData.mapGare(rows)[1].heroImage,null);
+test('heroImage usa il circuito come fallback e accetta soltanto override locali sicuri',()=>{
+  const names=['Autodromo Nazionale Monza','Spa-Francorchamps','Nürburgring GP','Red Bull Ring','Suzuka'];
+  const rows=names.map((CIRCUITO,index)=>({GARA:String(index+1),DATA:'2026-09-10',ORA:'21:45',CIRCUITO,PAESE:'IT',CLASSE:'GR.3',HERO_IMAGE:index===1?'https://example.com/spa.jpg':''}));
+  rows.push({GARA:'6',DATA:'2026-09-10',ORA:'21:45',CIRCUITO:'Nürburgring GP',PAESE:'DE',CLASSE:'GR.3',HERO_IMAGE:'assets/circuits/redbull.webp'});
+  rows.push({GARA:'7',DATA:'2026-09-10',ORA:'21:45',CIRCUITO:'Monza',PAESE:'IT',CLASSE:'GR.3',HERO_IMAGE:'assets/circuits/custom.webp'});
+  rows.push({GARA:'8',DATA:'2026-09-10',ORA:'21:45',CIRCUITO:'Circuito sconosciuto',PAESE:'IT',CLASSE:'GR.3',HERO_IMAGE:'../secret.jpg'});
+  assert.deepEqual(LiveData.mapGare(rows).map(race=>race.heroImage),[
+    'assets/circuits/monza.webp','assets/circuits/spa.webp','assets/circuits/nurburgring.webp','assets/circuits/redbull.webp','assets/circuits/suzuka.webp','assets/circuits/redbull.webp','assets/circuits/monza.webp',null
+  ]);
 });
 
 test('filtra qualifiche, risultati e classifiche su piloti del roster',()=>{

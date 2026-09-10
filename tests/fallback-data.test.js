@@ -36,6 +36,12 @@ test('LOCAL_DATA espone fallback completo e dieci gare',()=>{
   assert.equal(RACES.length,10);assert.equal(LOCAL_DATA.qualifiche.length,0);assert.equal(LOCAL_DATA.risultati.length,0);assert.equal(LOCAL_DATA.classifiche.length,0);
 });
 
+test('le gare fallback riusano le cinque fotografie circuito nello stesso ordine',()=>{
+  const {RACES}=loadFallback();
+  const expected=['monza','spa','nurburgring','redbull','suzuka','monza','spa','nurburgring','redbull','suzuka'].map(key=>`assets/circuits/${key}.webp`);
+  assert.deepEqual(Array.from(RACES,race=>race.heroImage),expected);
+});
+
 test('Collisione muretto è NO in tutte le dieci lobby',()=>{
   const {RACES,LOBBY_SECTIONS}=loadFallback(),section=LOBBY_SECTIONS.find(item=>item.title==='Penalità & Regole'),setting=section.items.find(item=>item[0]==='Collisione muretto');
   assert.equal(RACES.length,10);

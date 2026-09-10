@@ -25,9 +25,9 @@ Fino a nove round registrati punti lordi e validi coincidono. Al decimo round il
 
 ## Immagini panoramiche circuiti
 
-La colonna opzionale `HERO_IMAGE` del foglio `GARE` è supportata. Per sicurezza sono accettati soltanto percorsi locali nella forma `assets/circuits/nome-file.webp` (anche AVIF, JPG o PNG). Se il campo è vuoto o non valido, la card e la scheda gara mantengono lo sfondo ART attuale e non effettuano alcuna richiesta immagine.
+La colonna opzionale `HERO_IMAGE` del foglio `GARE` è supportata. Per sicurezza sono accettati soltanto asset locali registrati nell'elenco applicativo e presenti nel progetto. Un valore registrato può sostituire l'immagine predefinita; se il campo è vuoto, esterno, non registrato o non valido, il sito associa automaticamente la fotografia locale del circuito. Se anche il circuito non è riconosciuto, resta attivo lo sfondo ART senza richieste verso file inesistenti.
 
-File panoramici ancora da fornire, volutamente non sostituiti con loghi o sagome:
+Fotografie panoramiche predefinite:
 
 - `assets/circuits/monza.webp`
 - `assets/circuits/spa.webp`
@@ -35,4 +35,4 @@ File panoramici ancora da fornire, volutamente non sostituiti con loghi o sagome
 - `assets/circuits/redbull.webp`
 - `assets/circuits/suzuka.webp`
 
-Quando i file saranno disponibili, aggiungere il percorso corrispondente nella colonna `HERO_IMAGE` delle gare interessate.
+Le gare 6-10 riutilizzano, nello stesso ordine, le fotografie delle gare 1-5. Autori, fonti e licenze sono documentati in `assets/circuits/CREDITS.md`.

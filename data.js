@@ -22,16 +22,16 @@ const FALLBACK_DRIVERS=[
   fallbackDriver("fra",95,"FRA","Francesco-Lepera","Italia","🇮🇹","JUNIOR","Porsche")
 ];
 const RACES=[
-  {n:1,c:"Autodromo Nazionale Monza",short:"Monza",key:"monza",flag:"🇮🇹",cat:"GR3",date:"2026-09-11T21:45:00+02:00",laps:18,qual:10,fuel:3,tyres:4,weather:"Non indicato"},
-  {n:2,c:"Spa-Francorchamps",short:"Spa-Francorchamps",key:"spa",flag:"🇧🇪",cat:"GR3",date:"2026-09-18T21:45:00+02:00",laps:14,qual:10,fuel:3,tyres:3,weather:"Probabile pioggia"},
-  {n:3,c:"Nürburgring GP",short:"Nürburgring GP",key:"nurburgring",flag:"🇩🇪",cat:"GR3",date:"2026-09-25T21:45:00+02:00",laps:16,qual:10,fuel:3,tyres:4,weather:"Non indicato"},
-  {n:4,c:"Red Bull Ring",short:"Red Bull Ring",key:"redbull",flag:"🇦🇹",cat:"GR3",date:"2026-10-02T21:45:00+02:00",laps:22,qual:10,fuel:3,tyres:5,weather:"Probabile pioggia"},
-  {n:5,c:"Suzuka",short:"Suzuka",key:"suzuka",flag:"🇯🇵",cat:"GR3",date:"2026-10-09T21:45:00+02:00",laps:15,qual:10,fuel:3,tyres:4,weather:"Non indicato"},
-  {n:6,c:"Autodromo Nazionale Monza",short:"Monza",key:"monza",flag:"🇮🇹",cat:"GR4",date:"2026-10-16T21:45:00+02:00",laps:16,qual:10,fuel:2,tyres:3,weather:"Non indicato"},
-  {n:7,c:"Spa-Francorchamps",short:"Spa-Francorchamps",key:"spa",flag:"🇧🇪",cat:"GR4",date:"2026-10-23T21:45:00+02:00",laps:12,qual:10,fuel:2,tyres:2,weather:"Probabile pioggia"},
-  {n:8,c:"Nürburgring GP",short:"Nürburgring GP",key:"nurburgring",flag:"🇩🇪",cat:"GR4",date:"2026-10-30T21:45:00+01:00",laps:14,qual:10,fuel:2,tyres:3,weather:"Non indicato"},
-  {n:9,c:"Red Bull Ring",short:"Red Bull Ring",key:"redbull",flag:"🇦🇹",cat:"GR4",date:"2026-11-06T21:45:00+01:00",laps:19,qual:10,fuel:2,tyres:3,weather:"Probabile pioggia"},
-  {n:10,c:"Suzuka",short:"Suzuka",key:"suzuka",flag:"🇯🇵",cat:"GR4",date:"2026-11-13T21:45:00+01:00",laps:13,qual:10,fuel:2,tyres:3,weather:"Non indicato"}
+  {n:1,c:"Autodromo Nazionale Monza",short:"Monza",key:"monza",flag:"🇮🇹",cat:"GR3",date:"2026-09-11T21:45:00+02:00",laps:18,qual:10,fuel:3,tyres:4,weather:"Non indicato",heroImage:"assets/circuits/monza.webp"},
+  {n:2,c:"Spa-Francorchamps",short:"Spa-Francorchamps",key:"spa",flag:"🇧🇪",cat:"GR3",date:"2026-09-18T21:45:00+02:00",laps:14,qual:10,fuel:3,tyres:3,weather:"Probabile pioggia",heroImage:"assets/circuits/spa.webp"},
+  {n:3,c:"Nürburgring GP",short:"Nürburgring GP",key:"nurburgring",flag:"🇩🇪",cat:"GR3",date:"2026-09-25T21:45:00+02:00",laps:16,qual:10,fuel:3,tyres:4,weather:"Non indicato",heroImage:"assets/circuits/nurburgring.webp"},
+  {n:4,c:"Red Bull Ring",short:"Red Bull Ring",key:"redbull",flag:"🇦🇹",cat:"GR3",date:"2026-10-02T21:45:00+02:00",laps:22,qual:10,fuel:3,tyres:5,weather:"Probabile pioggia",heroImage:"assets/circuits/redbull.webp"},
+  {n:5,c:"Suzuka",short:"Suzuka",key:"suzuka",flag:"🇯🇵",cat:"GR3",date:"2026-10-09T21:45:00+02:00",laps:15,qual:10,fuel:3,tyres:4,weather:"Non indicato",heroImage:"assets/circuits/suzuka.webp"},
+  {n:6,c:"Autodromo Nazionale Monza",short:"Monza",key:"monza",flag:"🇮🇹",cat:"GR4",date:"2026-10-16T21:45:00+02:00",laps:16,qual:10,fuel:2,tyres:3,weather:"Non indicato",heroImage:"assets/circuits/monza.webp"},
+  {n:7,c:"Spa-Francorchamps",short:"Spa-Francorchamps",key:"spa",flag:"🇧🇪",cat:"GR4",date:"2026-10-23T21:45:00+02:00",laps:12,qual:10,fuel:2,tyres:2,weather:"Probabile pioggia",heroImage:"assets/circuits/spa.webp"},
+  {n:8,c:"Nürburgring GP",short:"Nürburgring GP",key:"nurburgring",flag:"🇩🇪",cat:"GR4",date:"2026-10-30T21:45:00+01:00",laps:14,qual:10,fuel:2,tyres:3,weather:"Non indicato",heroImage:"assets/circuits/nurburgring.webp"},
+  {n:9,c:"Red Bull Ring",short:"Red Bull Ring",key:"redbull",flag:"🇦🇹",cat:"GR4",date:"2026-11-06T21:45:00+01:00",laps:19,qual:10,fuel:2,tyres:3,weather:"Probabile pioggia",heroImage:"assets/circuits/redbull.webp"},
+  {n:10,c:"Suzuka",short:"Suzuka",key:"suzuka",flag:"🇯🇵",cat:"GR4",date:"2026-11-13T21:45:00+01:00",laps:13,qual:10,fuel:2,tyres:3,weather:"Non indicato",heroImage:"assets/circuits/suzuka.webp"}
 ];
 const LOBBY_SECTIONS=[
   {title:"Impostazione Qualifica",items:[["Tempo limite",r=>`${r.qual} min`],["Tempo qualifica","180 sec"],["Consumi","NO"],["Scia","NO"]]},

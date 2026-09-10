@@ -43,16 +43,24 @@ test('nessun dato o riferimento obsoleto viene reintrodotto',()=>{
   assert.match(fs.readFileSync(path.join(root,'race.html'),'utf8'),/\["monza","redbull"\]/);
 });
 
-test('il service worker precachea il client live ma non intercetta i CSV Google',()=>{
+test('il service worker precachea client live e fotografie circuiti ma non intercetta i CSV Google',()=>{
   const sw=fs.readFileSync(path.join(root,'sw.js'),'utf8');
   assert.match(sw,/js\/live-data\.js/);
+  for(const key of ['monza','spa','nurburgring','redbull','suzuka'])assert.match(sw,new RegExp(`assets/circuits/${key}\\.webp`));
   assert.match(sw,/googleusercontent\.com/);
 });
 
-test('heroImage è documentato senza creare panoramiche fittizie',()=>{
+test('le cinque panoramiche WebP e i relativi crediti sono presenti',()=>{
   const doc=fs.readFileSync(path.join(root,'DATA_SOURCE.md'),'utf8');
-  for(const key of ['monza','spa','nurburgring','redbull','suzuka'])assert.match(doc,new RegExp(`assets/circuits/${key}\\.webp`));
-  assert.equal(fs.existsSync(path.join(root,'assets/circuits')),false);
+  const credits=fs.readFileSync(path.join(root,'assets/circuits/CREDITS.md'),'utf8');
+  for(const key of ['monza','spa','nurburgring','redbull','suzuka']){
+    const relative=`assets/circuits/${key}.webp`,file=path.join(root,relative),buffer=fs.readFileSync(file);
+    assert.match(doc,new RegExp(relative.replace('.','\\.')));
+    assert.ok(buffer.length<600_000,`${relative} pesa ${buffer.length} byte`);
+    assert.equal(buffer.subarray(0,4).toString('ascii'),'RIFF',relative);
+    assert.equal(buffer.subarray(8,12).toString('ascii'),'WEBP',relative);
+    assert.match(credits,new RegExp(`${key}\\.webp`));
+  }
 });
 
 test('le viste prevedono un riepilogo discreto dello scarto soltanto quando presente',()=>{
