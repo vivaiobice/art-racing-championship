@@ -1,4 +1,4 @@
-function fallbackDriver(id,number,name,psn,country,flag,category,team){return {id,number,name,psn,country,flag,category,team,active:true,points:0,races:0,wins:0,seconds:0,thirds:0,ranking:null,poles:0,fastest:0,bestResult:"—",gr3Points:0,gr4Points:0,gr3Races:0,gr4Races:0,lastResult:"—",qualBest:"—",absences:0};}
+function fallbackDriver(id,number,name,psn,country,flag,category,team){return {id,number,name,psn,country,flag,category,team,active:true,points:0,grossPoints:0,discardPoints:0,discardedRound:null,rounds:[],races:0,wins:0,seconds:0,thirds:0,placements:{},ranking:null,poles:0,fastest:0,bestResult:"—",gr3Points:0,gr4Points:0,gr3Races:0,gr4Races:0,lastResult:"—",qualBest:"—",absences:0};}
 const FALLBACK_DRIVERS=[
   fallbackDriver("nano94",2,"Nano94","AdamantionX94","Italia","🇮🇹","MASTER","Porsche"),
   fallbackDriver("lele",4,"LELE","Lele_0489","Svizzera","🇨🇭","JUNIOR","Mercedes"),
@@ -37,7 +37,7 @@ const LOBBY_SECTIONS=[
   {title:"Impostazione Qualifica",items:[["Tempo limite",r=>`${r.qual} min`],["Tempo qualifica","180 sec"],["Consumi","NO"],["Scia","NO"]]},
   {title:"Impostazione Gara",items:[["Accesso lobby","Solo Amici"],["Modalità","Gara Amichevole"],["Partecipanti max","16"],["Tipo di partenza","Da griglia con falsa partenza"],["Ordine griglia","Pole al più veloce"],["BoP","Attivo"],["Bilanciamento freni","Sì"],["Deportanza","Sì"],["Turbo","Disattivato"],["Intensità scia","Realistica"],["Danni visibili","Sì"],["Danni meccanici","Ridotti"],["Aderenza fuori pista","Realistica"],["Tempo completamento","180 sec"],["Nitro","Proibito"],["Minimo box","1 stop"]]},
   {title:"Gomme & Carburante",items:[["Numero giri",r=>String(r.laps)],["Consumo carburante",r=>`×${r.fuel}`],["Usura gomme",r=>`×${r.tyres}`],["Carburante iniziale","100%"],["Velocità rifornimento","5 L/sec"],["Gomme utilizzabili","Da corsa, tutti i tipi"],["Gomme obbligatorie","Corsa Morbide e Corsa Medie"]]},
-  {title:"Penalità & Regole",items:[["Taglio tracciato","Debole"],["Collisione muretto","Sì"],["Correzione post-muretto","NO"],["Collisione vettura","Sì"],["Taglio corsia box","Sì"],["Trasparenza","NO"],["Regole bandiere","Sì"]]},
+  {title:"Penalità & Regole",items:[["Taglio tracciato","Debole"],["Collisione muretto","NO"],["Correzione post-muretto","NO"],["Collisione vettura","Sì"],["Taglio corsia box","Sì"],["Trasparenza","NO"],["Regole bandiere","Sì"]]},
   {title:"Assistenze",items:[["Controsterzo","Proibito"],["Controllo stabilità","Proibito"],["Traiettoria assistita","Nessun limite"],["Controllo trazione","Nessun limite"],["ABS","Nessun limite"],["Pilota automatico","NO"]]}
 ];
 const LOCAL_DATA={piloti:FALLBACK_DRIVERS,gare:RACES,qualifiche:[],risultati:[],classifiche:[],config:{}};

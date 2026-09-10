@@ -53,6 +53,8 @@ table{width:100%;border-collapse:collapse}th,td{padding:11px 8px;border-bottom:1
   .driver-name-xl h1{font-size:27px}
 }
 .race-card.has-hero,.event-hero.has-hero{background-image:linear-gradient(90deg,rgba(7,9,13,.96),rgba(7,9,13,.72)),var(--race-hero);background-size:cover;background-position:center}
+.discard-note{display:block;color:var(--muted);font-size:9px;font-weight:700;white-space:nowrap}.discard-summary{grid-column:1/-1;display:flex;justify-content:space-between;gap:10px;border:1px dashed rgba(243,201,79,.42);border-radius:10px;padding:9px 11px;color:var(--muted);font-size:11px}.discard-summary b{color:var(--text);margin-left:4px}.discarded-result{opacity:.68}.discarded-result td{text-decoration:line-through;text-decoration-color:rgba(243,201,79,.7)}.discard-badge{display:inline-flex;padding:3px 6px;border-radius:6px;background:rgba(243,201,79,.12);color:var(--gold);font-size:9px;font-weight:900;text-decoration:none}
+@media(max-width:760px){.discard-summary{flex-direction:column;gap:5px}}
 .race-card.has-hero,.event-hero.has-hero{background-image:linear-gradient(90deg,rgba(7,9,13,.96),rgba(7,9,13,.72)),var(--race-hero);background-size:cover;background-position:center}
 
 

@@ -19,8 +19,8 @@ test('gli script inline di tutte le pagine hanno sintassi valida',()=>{
 test('le pagine dati caricano fallback prima del client live',()=>{
   for(const page of ['index.html','driver.html','race.html','lobby.html']){
     const html=fs.readFileSync(path.join(root,page),'utf8');
-    assert.ok(html.indexOf('data.js?v=7')>=0,page);
-    assert.ok(html.indexOf('js/live-data.js?v=7')>html.indexOf('data.js?v=7'),page);
+    assert.ok(html.indexOf('data.js?v=8')>=0,page);
+    assert.ok(html.indexOf('js/live-data.js?v=8')>html.indexOf('data.js?v=8'),page);
     assert.match(html,/ARTLiveData\.getAll\(\)/,page);
   }
 });
@@ -53,4 +53,20 @@ test('heroImage è documentato senza creare panoramiche fittizie',()=>{
   const doc=fs.readFileSync(path.join(root,'DATA_SOURCE.md'),'utf8');
   for(const key of ['monza','spa','nurburgring','redbull','suzuka'])assert.match(doc,new RegExp(`assets/circuits/${key}\\.webp`));
   assert.equal(fs.existsSync(path.join(root,'assets/circuits')),false);
+});
+
+test('le viste prevedono un riepilogo discreto dello scarto soltanto quando presente',()=>{
+  assert.match(fs.readFileSync(path.join(root,'index.html'),'utf8'),/discard-note/);
+  assert.match(fs.readFileSync(path.join(root,'driver.html'),'utf8'),/discard-summary/);
+  assert.match(fs.readFileSync(path.join(root,'race.html'),'utf8'),/discarded-result/);
+});
+
+test('il regolamento espone la regola 9 su 10 e conserva le regole ufficiali',()=>{
+  const rules=fs.readFileSync(path.join(root,'regolamento.html'),'utf8');
+  for(const text of ['ART TROFEO DUAL-CLASS','Aggiornato al 06/09/2026','migliori 9 risultati su 10','DNF','DNS','DSQ','NON può essere scartato','20 secondi','WhatsApp','21:45'])assert.ok(rules.includes(text),text);
+});
+
+test('la documentazione descrive STATO e DSQ non scartabile',()=>{
+  const doc=fs.readFileSync(path.join(root,'DATA_SOURCE.md'),'utf8');
+  for(const text of ['STATO','FINISH','DNF','DNS','DSQ','non è mai scartabile','9 risultati su 10'])assert.ok(doc.includes(text),text);
 });
