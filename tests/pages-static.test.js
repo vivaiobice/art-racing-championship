@@ -19,8 +19,9 @@ test('gli script inline di tutte le pagine hanno sintassi valida',()=>{
 test('le pagine dati caricano fallback prima del client live',()=>{
   for(const page of ['index.html','driver.html','race.html','lobby.html']){
     const html=fs.readFileSync(path.join(root,page),'utf8');
-    assert.ok(html.indexOf('data.js?v=8')>=0,page);
-    assert.ok(html.indexOf('js/live-data.js?v=8')>html.indexOf('data.js?v=8'),page);
+    const fallbackIndex=html.search(/src="data\.js\?v=\d+"/),liveIndex=html.search(/src="js\/live-data\.js\?v=\d+"/);
+    assert.ok(fallbackIndex>=0,page);
+    assert.ok(liveIndex>fallbackIndex,page);
     assert.match(html,/ARTLiveData\.getAll\(\)/,page);
   }
 });
@@ -67,6 +68,23 @@ test('le viste prevedono un riepilogo discreto dello scarto soltanto quando pres
   assert.match(fs.readFileSync(path.join(root,'index.html'),'utf8'),/discard-note/);
   assert.match(fs.readFileSync(path.join(root,'driver.html'),'utf8'),/discard-summary/);
   assert.match(fs.readFileSync(path.join(root,'race.html'),'utf8'),/discarded-result/);
+});
+
+test('le pagine coinvolte espongono ricerca piloti, link classifica e tab Punteggi',()=>{
+  const index=fs.readFileSync(path.join(root,'index.html'),'utf8');
+  const race=fs.readFileSync(path.join(root,'race.html'),'utf8');
+  assert.match(index,/id="driverSearch"/);
+  assert.match(index,/class="driver-ranking-link"/);
+  assert.match(index,/driver\.html\?numero=/);
+  assert.match(race,/data-result="points"/);
+  assert.match(race,/p\.get\("gara"\)\|\|p\.get\("race"\)/);
+});
+
+test('la tab Punteggi conserva la quinta colonna su mobile e la ricerca normalizza gli spazi',()=>{
+  const index=fs.readFileSync(path.join(root,'index.html'),'utf8');
+  const css=fs.readFileSync(path.join(root,'styles.css'),'utf8');
+  assert.doesNotMatch(css,/th:nth-child\(5\),td:nth-child\(5\)\{display:none\}/);
+  assert.match(index,/currentDriverQuery\.trim\(\)/);
 });
 
 test('il regolamento espone la regola 9 su 10 e conserva le regole ufficiali',()=>{

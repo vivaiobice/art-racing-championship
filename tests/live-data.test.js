@@ -63,6 +63,50 @@ test('risultati normalizzano FINISH, DNF, DNS, DSQ e calcolano i bonus mancanti'
   assert.equal(rows[0].points,27);
 });
 
+test('BONUS_GV assegna a FAX un giro veloce senza interpretare il tempo sul giro come booleano',()=>{
+  const drivers=[
+    {id:'gio',number:76,name:'GIO',category:'MASTER'},
+    {id:'fax86',number:86,name:'FAX',category:'MASTER'}
+  ];
+  const results=LiveData.mapRisultati([
+    {GARA:'1',POS:'1',PILOTA_ID:'gio',GIRO_VELOCE:'1:50.082',PRESENTE:'TRUE',PUNTI_BASE:'25',BONUS_POLE:'0',BONUS_GV:'0',PUNTI_TOTALI:'25',NOTE:'FINISH'},
+    {GARA:'1',POS:'7',PILOTA_ID:'fax86',GIRO_VELOCE:'1:50.064',PRESENTE:'TRUE',PUNTI_BASE:'6',BONUS_POLE:'0',BONUS_GV:'1',PUNTI_TOTALI:'7',NOTE:'FINISH · GIRO VELOCE'}
+  ],new Set(drivers.map(driver=>driver.id)));
+  const stats=LiveData.applyStats(drivers,[{n:1,cat:'GR3'}],[],results,[]);
+  assert.equal(stats.find(driver=>driver.id==='fax86').fastest,1);
+  assert.equal(stats.find(driver=>driver.id==='gio').fastest,0);
+});
+
+test('rankDrivers centralizza l’ordine ufficiale della classifica generale',()=>{
+  assert.equal(typeof LiveData.rankDrivers,'function');
+  const points=[['energymauri',4],['fax86',7],['gio',25],['fra',19],['gabry',15],['nano94',12],['zyx',10],['eiden',8],['yannis',2],['sovrano',1]];
+  const drivers=points.map(([id,value],index)=>({id,name:id,number:index+1,points:value,wins:0,placements:{},rounds:[]}));
+  assert.deepEqual(LiveData.rankDrivers(drivers).map(driver=>driver.id),['gio','fra','gabry','nano94','zyx','eiden','fax86','energymauri','yannis','sovrano']);
+});
+
+test('filterDrivers cerca senza distinzione di maiuscole per nome, PSN, numero e scuderia',()=>{
+  assert.equal(typeof LiveData.filterDrivers,'function');
+  const drivers=[
+    {name:'FAX',psn:'Fax-86',number:86,team:'Porsche'},
+    {name:'ENERGYMAURI',psn:'Energymauri_76',number:27,team:'Ferrari'}
+  ];
+  for(const query of ['fax','86','PORSCHE'])assert.deepEqual(LiveData.filterDrivers(drivers,query).map(driver=>driver.name),['FAX']);
+  assert.deepEqual(LiveData.filterDrivers(drivers,'energy').map(driver=>driver.name),['ENERGYMAURI']);
+  assert.deepEqual(LiveData.filterDrivers(drivers,''),drivers);
+  assert.deepEqual(LiveData.filterDrivers(drivers,'nessuno'),[]);
+});
+
+test('racePoints filtra la gara, ordina l’arrivo e ricava lo stato visibile dai risultati reali',()=>{
+  assert.equal(typeof LiveData.racePoints,'function');
+  const rows=LiveData.racePoints([
+    {race:2,driverId:'altro',pos:1,status:'FINISH',present:true,note:'FINISH'},
+    {race:1,driverId:'fax86',pos:7,basePoints:6,poleBonus:0,fastestBonus:1,penalty:0,points:7,status:'FINISH',present:true,note:'FINISH · GIRO VELOCE'},
+    {race:1,driverId:'calibra63',pos:12,basePoints:0,poleBonus:0,fastestBonus:0,penalty:0,points:0,status:'FINISH',present:true,note:'DNF'},
+    {race:1,driverId:'lele',pos:null,basePoints:0,poleBonus:0,fastestBonus:0,penalty:0,points:0,status:'DNS',present:false,note:'DNS'}
+  ],1);
+  assert.deepEqual(rows.map(row=>[row.driverId,row.displayStatus]),[['fax86','FINISH'],['calibra63','DNF'],['lele','DNS']]);
+});
+
 test('con dieci FINISH scarta il round con meno punti',()=>{
   const summary=LiveData.calculateChampionship([25,18,15,12,10,8,6,4,2,1].map((points,index)=>({race:index+1,status:'FINISH',points})));
   assert.deepEqual({gross:summary.grossPoints,discard:summary.discardPoints,valid:summary.validPoints,round:summary.discardedRound},{gross:101,discard:1,valid:100,round:10});

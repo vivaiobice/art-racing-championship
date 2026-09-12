@@ -19,7 +19,7 @@ table{width:100%;border-collapse:collapse}th,td{padding:11px 8px;border-bottom:1
 @media(max-width:1050px){.kpis{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.driver-grid{grid-template-columns:repeat(2,1fr)}.race-specs{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:760px){.shell{display:block}.sidebar{display:none}main{padding:18px 14px 82px}.topbar{margin-top:4px}.topbar h1{font-size:25px}.hero{grid-template-columns:1fr}.countbox{min-width:0}.driver-grid{grid-template-columns:1fr}.cars{grid-template-columns:1fr}.mobile-nav{display:flex;position:fixed;z-index:100;bottom:0;left:0;right:0;height:64px;background:rgba(7,9,13,.96);backdrop-filter:blur(12px);border-top:1px solid var(--line);justify-content:space-around;align-items:center;padding:6px}.mobile-nav button,.mobile-nav a{background:none;border:0;color:var(--muted);text-decoration:none;font-size:10px;text-align:center}.mobile-nav b{display:block;font-size:18px;color:#e7eaf0;margin-bottom:2px}.mobile-nav .active{color:white}.mobile-nav .active b{color:var(--red)}}
 @media(max-width:760px){.grid2>*{min-width:0}.grid2 .card{overflow:hidden}#dashRanking{overflow-x:auto}}
-@media(max-width:520px){.kpis{grid-template-columns:1fr}.race-specs{grid-template-columns:repeat(2,1fr)}.season{display:none}th:nth-child(5),td:nth-child(5){display:none}}
+@media(max-width:520px){.kpis{grid-template-columns:1fr}.race-specs{grid-template-columns:repeat(2,1fr)}.season{display:none}#dashRanking th:nth-child(5),#dashRanking td:nth-child(5),#generalRanking th:nth-child(5),#generalRanking td:nth-child(5),#gr3Ranking th:nth-child(5),#gr3Ranking td:nth-child(5),#gr4Ranking th:nth-child(5),#gr4Ranking td:nth-child(5){display:none}}
 
 
 /* v4 mobile + driver detail */
@@ -94,3 +94,7 @@ table{width:100%;border-collapse:collapse}th,td{padding:11px 8px;border-bottom:1
   .circuit-name{gap:7px}.race-top h3{font-size:18px}.race-actions{display:grid;grid-template-columns:1fr}.race-actions .race-link{justify-content:center}
   .lobby-page{padding:14px}.lobby-backlinks{align-items:center}.lobby-hero{grid-template-columns:1fr;padding:18px}.lobby-hero h1{font-size:27px}.lobby-summary{grid-template-columns:repeat(2,1fr)}.lobby-grid{grid-template-columns:1fr}.lobby-setting{gap:12px}
 }
+
+/* driver search + ranking links */
+.driver-search{margin:0 0 14px}.driver-search input{width:100%;border:1px solid var(--line);border-radius:11px;background:#0b1017;color:var(--text);padding:12px 14px;font:inherit;outline:none}.driver-search input:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(227,38,46,.12)}.driver-search input::placeholder{color:var(--muted)}
+.driver-search-empty{border:1px dashed #3a4556;border-radius:12px;padding:30px;text-align:center;color:var(--muted)}.driver-ranking-link{display:inline-flex;align-items:center;color:inherit;text-decoration:none;border-radius:8px}.driver-ranking-link:hover,.driver-ranking-link:focus-visible{color:#fff;outline:2px solid rgba(227,38,46,.7);outline-offset:2px}
