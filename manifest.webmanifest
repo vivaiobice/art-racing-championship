@@ -1,7 +1,7 @@
 {
   "name": "ART Racing Championship",
   "short_name": "ART Racing",
-  "start_url": "./index.html",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#07090d",

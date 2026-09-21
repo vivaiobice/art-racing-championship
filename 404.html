@@ -1,88 +1,30 @@
-<!doctype html><html lang="it"><head><title>ART Racing Championship</title><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#d71920"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="ART Racing">
-<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png"><link rel="stylesheet" href="styles.css?v=7"></head><body>
-<div class="shell"><aside class="sidebar"><div class="brand"><img src="assets/art-logo.png" alt="ART Racing"><small>ART RACING CHAMPIONSHIP</small></div>
-<nav class="nav"><button class="active" data-page="dashboard">Dashboard</button><button data-page="classifica">Classifica generale</button><button data-page="gr3">Classifica GR3</button><button data-page="gr4">Classifica GR4</button><button data-page="scuderie">Scuderie</button><button data-page="piloti">Piloti</button><button data-page="calendario">Calendario</button><a href="regolamento.html">Regolamento</a></nav></aside><main>
-<div class="mobile-brand"><img src="assets/art-logo.png" alt="ART Racing Championship"></div>
-<div class="topbar"><div><h1 id="pageTitle">Dashboard</h1><p>Campionato interno ART · Dual-Class GT7</p></div><div class="season">STAGIONE 2026</div></div>
-
-<section class="page active" id="dashboard">
-<div class="hero"><div><h2>ART Racing Championship</h2><p>10 round, classi Gr.3 e Gr.4, classifiche Master e Junior.</p></div><div class="countbox"><small>Prossima gara</small><strong id="nextRaceName">—</strong><div id="nextRaceDate" style="color:var(--muted);font-size:12px">—</div><div class="countdown"><span><b id="cdD">0</b><small>giorni</small></span><span><b id="cdH">00</b><small>ore</small></span><span><b id="cdM">00</b><small>min</small></span><span><b id="cdS">00</b><small>sec</small></span></div></div></div>
-<div class="kpis"><div class="card"><span class="kpi-label">PILOTI</span><div class="kpi-value">20</div></div><div class="card"><span class="kpi-label">MASTER</span><div class="kpi-value">10</div></div><div class="card"><span class="kpi-label">JUNIOR</span><div class="kpi-value">10</div></div><div class="card"><span class="kpi-label">GARE</span><div class="kpi-value">10</div></div></div>
-<div class="grid2"><div class="card"><div class="section-head"><h3>Classifica generale</h3><span class="pill red">LIVE</span></div><div id="dashRanking"></div></div><div class="card"><div class="section-head"><h3>Prossime gare</h3></div><div class="races" id="dashRaces"></div></div></div>
-</section>
-
-<section class="page" id="classifica"><div class="card">
-<div class="section-head"><h2 id="mobileRankingTitle">Classifica generale</h2><span class="pill">Punti campionato</span></div>
-<div class="tabs ranking-scope"><button class="tab active" data-ranking-scope="GENERAL">Generale</button><button class="tab" data-ranking-scope="GR3">Gr.3</button><button class="tab" data-ranking-scope="GR4">Gr.4</button></div>
-<div class="tabs"><button class="tab active" data-filter="ALL">Tutti</button><button class="tab" data-filter="MASTER">Master</button><button class="tab" data-filter="JUNIOR">Junior</button></div>
-<div id="generalRanking"></div></div></section>
-<section class="page" id="gr3"><div class="card"><div class="section-head"><h2>Classifica Gr.3</h2><span class="pill">Gare 1–5</span></div><div class="tabs"><button class="tab active" data-gr3-filter="ALL">Tutti</button><button class="tab" data-gr3-filter="MASTER">Master</button><button class="tab" data-gr3-filter="JUNIOR">Junior</button></div><div id="gr3Ranking"></div></div></section>
-<section class="page" id="gr4"><div class="card"><div class="section-head"><h2>Classifica Gr.4</h2><span class="pill">Gare 6–10</span></div><div class="tabs"><button class="tab active" data-gr4-filter="ALL">Tutti</button><button class="tab" data-gr4-filter="MASTER">Master</button><button class="tab" data-gr4-filter="JUNIOR">Junior</button></div><div id="gr4Ranking"></div></div></section>
-<section class="page" id="scuderie"><div class="section-head"><h2>Scuderie</h2></div><div class="driver-grid" id="teamGrid"></div></section>
-<section class="page" id="piloti"><div class="section-head"><h2>Piloti</h2><span class="pill">20 iscritti</span></div><div class="driver-grid" id="driverGrid"></div></section>
-<section class="page" id="calendario"><div class="section-head"><h2>Calendario 2026</h2><span class="pill">Start 21:45</span></div><div class="races" id="calendarGrid"></div></section>
-
-<div class="footer">ART Racing Championship · Campionato interno Dual-Class GT7</div>
-</main></div><nav class="mobile-nav">
-<button class="active" data-page="dashboard" aria-label="Home">
-<svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/><path d="M9.5 20v-5.5h5V20"/></svg>Home</button>
-<button data-page="classifica" aria-label="Classifica">
-<svg class="nav-icon" viewBox="0 0 24 24"><path d="M8 4h8v4a4 4 0 0 1-8 0Z"/><path d="M8 6H4v1a4 4 0 0 0 4 4"/><path d="M16 6h4v1a4 4 0 0 1-4 4"/><path d="M12 12v5"/><path d="M8 20h8"/><path d="M9 17h6"/></svg>Classifica</button>
-<button data-page="piloti" aria-label="Piloti">
-<svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5.5 20c.6-4.2 3-6.4 6.5-6.4s5.9 2.2 6.5 6.4"/><path d="M7.5 18.5h9"/></svg>Piloti</button>
-<button data-page="calendario" aria-label="Gare">
-<svg class="nav-icon" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 9h16"/><path d="M8 13h3M13 13h3M8 16h3"/></svg>Gare</button>
-<a href="regolamento.html" aria-label="Regole">
-<svg class="nav-icon" viewBox="0 0 24 24"><path d="M6 4h12v16H6z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>Regole</a>
-</nav><script src="data.js?v=8"></script><script>const currentDrivers=LOCAL_DATA.piloti,currentRaces=LOCAL_DATA.gare;</script><script>
-const TEAM_COLORS={Ferrari:"#e10600",Porsche:"#1f6ed4",Nissan:"#ffd400",Toyota:"#ffffff",Mercedes:"#3b424c"};
-function fmtDate(iso){return new Intl.DateTimeFormat("it-IT",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit",timeZone:"Europe/Rome"}).format(new Date(iso));}
-function nextRace(){return currentRaces.find(r=>new Date(r.date)>new Date());}
-function teamLabel(t){return t||"Da assegnare";}
-function teamDot(t){return `<span class="team-dot team-${t||"none"}"></span>${teamLabel(t)}`;}
-function badge(d){return `<span class="category-badge ${d.category.toLowerCase()}">${d.category==="MASTER"?"M":"J"}</span>`;}
-function sortedDrivers(list){return [...list].sort((a,b)=>b.points-a.points||b.wins-a.wins||b.seconds-a.seconds||b.thirds-a.thirds||a.number-b.number);}
-function rankingTable(list){let arr=sortedDrivers(list);return `<table><thead><tr><th>Pos.</th><th>Pilota</th><th>Categoria</th><th>Scuderia</th><th>Gare</th><th>Punti</th></tr></thead><tbody>${arr.map((d,i)=>`<tr><td><b>${i+1}</b></td><td><span class="race-number" style="--team:${TEAM_COLORS[d.team]||"#596474"}">#${d.number}</span><b>${d.name}</b><div style="color:var(--muted);font-size:11px;margin-left:45px">${d.psn}</div></td><td>${badge(d)}</td><td>${teamDot(d.team)}</td><td>${d.races}</td><td class="pts">${d.points}</td></tr>`).join("")}</tbody></table>`;}
-function raceCard(r){let n=nextRace();let isNext=n&&n.n===r.n;let status=new Date(r.date)<=new Date()?"CONCLUSA":isNext?"PROSSIMA":"PROGRAMMATA";return `<article class="race-card ${isNext?"next":""}"><div class="race-top"><div><div style="font-size:10px;color:var(--red);font-weight:900;letter-spacing:.08em">GARA ${r.n}</div><h3>${r.c}</h3></div><span class="race-tag">${r.cat.replace("GR","GR.")}</span></div><div class="race-meta">${fmtDate(r.date)} · ${status}</div><div class="race-specs"><div class="spec"><span>Giri</span><b>${r.laps??"Da confermare"}</b></div><div class="spec"><span>Qualifica</span><b>${r.qual} min</b></div><div class="spec"><span>Carburante</span><b>×${r.fuel}</b></div><div class="spec"><span>Gomme</span><b>×${r.tyres}</b></div></div>${r.weather!=="Non indicato"?`<span class="weather">💧 ${r.weather}</span>`:""}<div class="race-actions"><a class="race-link results-link" href="race.html?gara=${r.n}">Risultati gara</a><a class="race-link lobby-link" href="lobby.html?race=${r.n}">Impostazioni lobby</a></div></article>`;}
-document.getElementById("dashRanking").innerHTML=rankingTable(currentDrivers.slice(0,8));
-document.getElementById("generalRanking").innerHTML=rankingTable(currentDrivers);
-document.getElementById("gr3Ranking").innerHTML=rankingTable(currentDrivers);
-document.getElementById("gr4Ranking").innerHTML=rankingTable(currentDrivers);
-document.getElementById("dashRaces").innerHTML=currentRaces.filter(r=>new Date(r.date)>new Date()).slice(0,2).map(raceCard).join("");
-document.getElementById("calendarGrid").innerHTML=currentRaces.map(raceCard).join("");
-document.getElementById("driverGrid").innerHTML=currentDrivers.map(d=>`<article class="card driver-card" style="--team:${TEAM_COLORS[d.team]||"#596474"}" onclick="location.href='driver.html?numero=${d.number}'"><div class="driver-head"><span class="race-number" style="--team:${TEAM_COLORS[d.team]||"#596474"}">#${d.number}</span><div><h3>${d.flag} ${d.name} ${badge(d)}</h3><p>PSN ID: ${d.psn}</p><p>${teamDot(d.team)}</p></div></div><div class="driver-stats"><div class="driver-stat"><span>Ranking ART</span><strong>${d.ranking??"—"}</strong></div><div class="driver-stat"><span>Punti</span><strong class="pts">${d.points}</strong></div><div class="driver-stat"><span>Gare disputate</span><strong>${d.races}</strong></div><div class="driver-stat"><span>Media punti</span><strong>${d.races?(d.points/d.races).toFixed(1):"0,0"}</strong></div></div><a class="open-driver" href="driver.html?numero=${d.number}" onclick="event.stopPropagation()">Apri scheda pilota →</a></article>`).join("");
-const teams=["Ferrari","Porsche","Nissan","Toyota","Mercedes"];document.getElementById("teamGrid").innerHTML=teams.map(t=>{let ds=currentDrivers.filter(d=>d.team===t);return `<article class="card driver-card" style="--team:${TEAM_COLORS[t]}"><h3>${teamDot(t)}</h3><p style="color:var(--muted)">${ds.length?ds.map(d=>`#${d.number} ${d.name}`).join(" · "):"Nessun pilota assegnato"}</p><div class="driver-stats"><div class="driver-stat"><span>Piloti</span><strong>${ds.length}</strong></div><div class="driver-stat"><span>Punti</span><strong class="pts">0</strong></div></div></article>`;}).join("");
-function showPage(id,btn){document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));document.getElementById(id).classList.add("active");document.querySelectorAll("[data-page]").forEach(b=>b.classList.remove("active"));document.querySelectorAll(`[data-page="${id}"]`).forEach(b=>b.classList.add("active"));document.getElementById("pageTitle").textContent={dashboard:"Dashboard",classifica:"Classifica generale",gr3:"Classifica Gr.3",gr4:"Classifica Gr.4",scuderie:"Scuderie",piloti:"Piloti",calendario:"Calendario"}[id]||"ART Racing";window.scrollTo({top:0,behavior:"smooth"});}
-document.querySelectorAll("[data-page]").forEach(b=>b.onclick=()=>showPage(b.dataset.page,b));
-const initialPage=(location.hash||"").replace("#","");if(["dashboard","classifica","gr3","gr4","scuderie","piloti","calendario"].includes(initialPage)){showPage(initialPage);}
-let rankingScope="GENERAL",rankingCategory="ALL";
-function renderMobileRanking(){
-  let list=rankingCategory==="ALL"?currentDrivers:currentDrivers.filter(d=>d.category===rankingCategory);
-  document.getElementById("generalRanking").innerHTML=rankingTable(list);
-  document.getElementById("mobileRankingTitle").textContent=rankingScope==="GENERAL"?"Classifica generale":rankingScope==="GR3"?"Classifica Gr.3":"Classifica Gr.4";
-}
-document.querySelectorAll(".tab[data-filter]").forEach(b=>b.onclick=()=>{
-  document.querySelectorAll(".tab[data-filter]").forEach(x=>x.classList.remove("active"));
-  b.classList.add("active");rankingCategory=b.dataset.filter;renderMobileRanking();
-});
-document.querySelectorAll(".tab[data-ranking-scope]").forEach(b=>b.onclick=()=>{
-  document.querySelectorAll(".tab[data-ranking-scope]").forEach(x=>x.classList.remove("active"));
-  b.classList.add("active");rankingScope=b.dataset.rankingScope;renderMobileRanking();
-});
-
-document.querySelectorAll(".tab[data-gr3-filter]").forEach(b=>b.onclick=()=>{
-  document.querySelectorAll(".tab[data-gr3-filter]").forEach(x=>x.classList.remove("active"));
-  b.classList.add("active");
-  const f=b.dataset.gr3Filter;
-  document.getElementById("gr3Ranking").innerHTML=rankingTable(f==="ALL"?currentDrivers:currentDrivers.filter(d=>d.category===f));
-});
-document.querySelectorAll(".tab[data-gr4-filter]").forEach(b=>b.onclick=()=>{
-  document.querySelectorAll(".tab[data-gr4-filter]").forEach(x=>x.classList.remove("active"));
-  b.classList.add("active");
-  const f=b.dataset.gr4Filter;
-  document.getElementById("gr4Ranking").innerHTML=rankingTable(f==="ALL"?currentDrivers:currentDrivers.filter(d=>d.category===f));
-});
-
-function tick(){let r=nextRace();if(!r)return;document.getElementById("nextRaceName").textContent=`Gara ${r.n} · ${r.short}`;document.getElementById("nextRaceDate").textContent=fmtDate(r.date);let diff=Math.max(0,new Date(r.date)-new Date());document.getElementById("cdD").textContent=Math.floor(diff/86400000);document.getElementById("cdH").textContent=String(Math.floor(diff%86400000/3600000)).padStart(2,"0");document.getElementById("cdM").textContent=String(Math.floor(diff%3600000/60000)).padStart(2,"0");document.getElementById("cdS").textContent=String(Math.floor(diff%60000/1000)).padStart(2,"0");}tick();setInterval(tick,1000);
-</script><script>if("serviceWorker" in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});</script></body></html>
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#07090d">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ART Racing">
+  <title>ART Racing Championship</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <style>
+    :root{color-scheme:dark;--text:#f5f7fa;--muted:#aab1bd}
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;background:#07090d;color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif}
+    body{min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at 50% 10%,rgba(215,25,32,.2),transparent 38%),linear-gradient(180deg,#0b0e14,#050609)}
+    #site-stop{width:min(680px,100%);text-align:center;padding:clamp(28px,7vw,64px);border:1px solid #2a303d;border-radius:24px;background:rgba(15,19,27,.94);box-shadow:0 24px 70px rgba(0,0,0,.45)}
+    img{display:block;width:min(320px,80%);height:auto;margin:0 auto 34px}.code{display:inline-block;margin-bottom:14px;color:#ff858a;font-size:12px;font-weight:900;letter-spacing:.18em}
+    h1{margin:0;font-size:clamp(32px,8vw,58px);line-height:1.02}p{margin:20px auto 0;max-width:500px;color:var(--muted);font-size:clamp(15px,3vw,18px);line-height:1.65}
+    @media(max-width:520px){body{padding:16px}#site-stop{padding:34px 22px;border-radius:18px}img{margin-bottom:26px}}
+  </style>
+</head>
+<body>
+  <main id="site-stop"><img src="assets/art-logo.png" alt="ART Racing Championship"><span class="code">404 · STOP TEMPORANEO</span><h1>Temporaneamente offline</h1><p>Il sito ART Racing Championship è momentaneamente sospeso.</p></main>
+  <script>if("serviceWorker" in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});</script>
+</body>
+</html>
